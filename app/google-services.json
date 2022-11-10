@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "602324501982",
+    "project_id": "smarte-2161f",
+    "storage_bucket": "smarte-2161f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:602324501982:android:463462df3c03e063df494f",
+        "android_client_info": {
+          "package_name": "com.example.learn_english_smart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "602324501982-qvd7bcq6ah7077a7dq1flunc50cp12b1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0_kcKKiAksnrnswWf08PKN7g67PSWDFQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "602324501982-qvd7bcq6ah7077a7dq1flunc50cp12b1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

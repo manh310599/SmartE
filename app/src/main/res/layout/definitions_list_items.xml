@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="8dp"
+    app:cardBackgroundColor="@color/color_asbestos"
+    app:cardCornerRadius="8dp"
+    android:layout_margin="8dp">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/textView_definitions"
+            android:text="Định nghĩa"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="@color/color_sun_flower"
+            android:textAlignment="center"
+            android:padding="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+
+        <TextView
+            android:id="@+id/translate"
+            android:text="Nghĩa"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="@color/color_sun_flower"
+            android:textAlignment="center"
+            android:padding="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/textView_example"
+            android:text="Ví dụ"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="@color/color_sun_flower"
+            android:textAlignment="center"
+            android:padding="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+
+        <TextView
+            android:id="@+id/trandic"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="@color/color_sun_flower"
+            android:textAlignment="center"
+            android:padding="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

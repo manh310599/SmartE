@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="16sp"
+    android:layout_gravity="center"
+
+    >
+
+
+    <TextView
+        android:id="@+id/title_add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_blue_corner_16_top_left_right"
+        android:gravity="center"
+        android:padding="12sp"
+        android:text="Thêm khóa học của bạn"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        tools:ignore="MissingConstraints" />
+
+
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="ScrollViewCount"
+        android:layout_below="@id/title_add"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/title_add"
+            android:background="@color/color_silver"
+
+            >
+
+            <ImageView
+                android:id="@+id/image_add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="16sp"
+                android:layout_marginStart="16sp"
+                android:layout_marginTop="16sp"
+                android:layout_marginEnd="16sp"
+                android:layout_marginBottom="16sp"
+                android:contentDescription="TODO"
+                android:src="@drawable/a" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/image_add"
+                android:layout_centerInParent="true"
+                android:background="@drawable/oval1"
+                android:padding="5sp"
+                android:text="Đổi hình"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+            <com.lib.customedittext.CustomEditText
+                android:id="@+id/name_course"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/add"
+                android:layout_marginTop="10sp"
+                android:layout_marginBottom="10sp"
+                android:inputType="text"
+                app:edt_hint="Tên khóa học"
+                app:edt_text_color="@color/com_facebook_blue"
+                app:edt_text_size="16sp"
+                android:gravity="center"
+                />
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/add_course"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/name_course"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/oval2"
+                android:gravity="center"
+                android:padding="10sp"
+                android:text="Thêm khóa học"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+
+
+
+    </androidx.core.widget.NestedScrollView>
+
+
+
+</RelativeLayout>

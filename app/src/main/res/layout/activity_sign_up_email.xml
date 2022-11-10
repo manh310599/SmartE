@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFC107"
+    android:orientation="vertical"
+    android:padding="@dimen/_10sdp"
+    tools:context=".Sign_up_Email"
+    android:gravity="center"
+    >
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/banner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_10sdp"
+            android:src="@drawable/smarte" />
+
+        <TextView
+            android:id="@+id/Tv_TK"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/banner"
+            android:layout_marginLeft="20sp"
+            android:text="Tài Khoản"
+            android:textColor="@color/teal_700"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <com.lib.customedittext.CustomEditText
+            android:id="@+id/EditTK"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/Tv_TK"
+            android:layout_marginStart="@dimen/_8sdp"
+
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:imeOptions="actionNext"
+            android:inputType="textEmailAddress"
+            android:maxLength="50"
+            app:edt_background="@drawable/round_editbox"
+            app:edt_hint="Nhập vào tài khoản"
+            app:edt_padding="@dimen/_10sdp"
+            app:edt_text_color="@android:color/black"
+            app:edt_text_size="@dimen/_12ssp" />
+
+        <TextView
+            android:id="@+id/Tv_MK"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/EditTK"
+            android:layout_marginLeft="20sp"
+            android:text="Mật khẩu"
+            android:textColor="@color/teal_700"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <com.lib.customedittext.CustomEditText
+            android:id="@+id/EditMK"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/Tv_MK"
+            android:layout_marginStart="@dimen/_8sdp"
+
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:imeOptions="actionNext"
+            android:inputType="text"
+            android:maxLength="15"
+            app:edt_background="@drawable/round_editbox"
+            app:edt_hint="Nhập vào tài khoản"
+            app:edt_padding="@dimen/_10sdp"
+            app:edt_text_color="@android:color/black"
+            app:edt_text_size="@dimen/_12ssp" />
+
+        <TextView
+            android:id="@+id/TV_NhapLaiMatKhau"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/EditMK"
+            android:layout_marginLeft="20sp"
+            android:text="Xác nhận mật khẩu"
+            android:textColor="@color/teal_700"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <com.lib.customedittext.CustomEditText
+            android:id="@+id/NhapLaiPass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/TV_NhapLaiMatKhau"
+            android:layout_marginStart="@dimen/_8sdp"
+
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:imeOptions="actionNext"
+            android:inputType="text"
+            android:maxLength="15"
+            app:edt_background="@drawable/round_editbox"
+            app:edt_hint="Nhập vào tài khoản"
+            app:edt_padding="@dimen/_10sdp"
+            app:edt_text_color="@android:color/black"
+            app:edt_text_size="@dimen/_12ssp" />
+
+        <ru.dimorinny.floatingtextbutton.FloatingTextButton
+
+            android:id="@+id/dangki"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/NhapLaiPass"
+            android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true"
+            app:floating_background_color="@color/olor_midnight_blue"
+            app:floating_left_icon="@drawable/dangki"
+            app:floating_title="Đăng ký"
+            app:floating_title_color="@android:color/white" />
+    </RelativeLayout>
+
+
+
+</RelativeLayout>
