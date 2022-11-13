@@ -6,17 +6,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 
-import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.View;
 
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -25,7 +25,7 @@ import android.widget.Toast;
 
 
 import com.bumptech.glide.Glide;
-import com.example.learn_english_smart.Class.Vocabulary;
+import com.example.learn_english_smart.Class.Vocabulary2;
 import com.example.learn_english_smart.Lottie_BottomBar;
 import com.example.learn_english_smart.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,14 +35,15 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
-import com.google.firebase.database.Query;
+
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.database.collection.LLRBNode;
 import com.lib.customedittext.CustomEditText;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -54,7 +55,7 @@ public class Content_course extends AppCompatActivity {
     private int progress = 0;
 //    boolean check = false;
     private ProgressBar progressBar;
-    private TextView textViewProgress,leveruser,WordContent,temp,check;
+    private TextView textViewProgress,leveruser,WordContent,temp,check,repeat,inputText;
     private Button easy,hard_to_remember,agree,absolutely_not,add_word,consider,do_remember_but_long,perfect;
     private boolean mIsBackVisible = false;
     private AnimatorSet mSetRightOut;
@@ -65,6 +66,14 @@ public class Content_course extends AppCompatActivity {
     private RelativeLayout information;
 
     String key;
+    @SuppressLint("SimpleDateFormat")
+    String currentDateString = new SimpleDateFormat("yyyyMMddHHmmss").format(Calendar.getInstance().getTime());
+    long currentDate = Long.parseLong(currentDateString);
+
+
+    @SuppressLint("SimpleDateFormat")
+    String currentDateString1 = new SimpleDateFormat("yyyyMMdd235959").format(Calendar.getInstance().getTime());
+    long currentDatefix = Long.parseLong(currentDateString1);
 
 
     int demi = 0;
@@ -184,7 +193,7 @@ public class Content_course extends AppCompatActivity {
         font_layout = findViewById(R.id.card_fondmain);
         back_layout = findViewById(R.id.card_backmain);
 
-        add_word = font_layout.findViewById(R.id.add_word);
+
 
         Notdata = font_layout.findViewById(R.id.NotData);
         check = back_layout.findViewById(R.id.check);
@@ -200,6 +209,7 @@ public class Content_course extends AppCompatActivity {
         loadAnimations();
         changeCameraDistance(font_layout,back_layout);
 ///////////////////////Button choice////////////////////////////////////////////
+        add_word = font_layout.findViewById(R.id.add_word);
         back_layout.setVisibility(View.INVISIBLE);
         absolutely_not = font_layout.findViewById(R.id.absolutely_not);
         hard_to_remember = font_layout.findViewById(R.id.hard_to_remember);
@@ -210,8 +220,8 @@ public class Content_course extends AppCompatActivity {
 ///////////////////////////////////////////////////////////////////////////////////
 
 
-
-
+        inputText = back_layout.findViewById(R.id.input_text);
+        repeat = back_layout.findViewById(R.id.repeat);
         leveruser = font_layout.findViewById(R.id.lever);
         progressBar = font_layout.findViewById(R.id.progress_bar);
         textViewProgress = font_layout.findViewById(R.id.text_view_progress);
@@ -271,10 +281,10 @@ public class Content_course extends AppCompatActivity {
             public void onClick(View view) {
 
 
-
+                repeat.setText("Lập lại sau 1p");
                 ///////////////////////////////Khi click vào thay đổi thông tin hình ảnh và từ vựng////////////////////
 
-
+                inputText.setText(answer.getText());
 
                 Boolean found1;
                 Boolean found2;
@@ -389,7 +399,7 @@ public class Content_course extends AppCompatActivity {
                         boolean found11;
                         boolean found12;
 
-                        String getMean = WordContent.getText().toString();
+                        String getMean =     WordContent.getText().toString();
                         aw = temp.getText().toString().trim().toUpperCase(Locale.ROOT);
 
                         found10 = aw.contains(muoi);
@@ -541,7 +551,8 @@ public class Content_course extends AppCompatActivity {
 
                 ///////////////////////////////Khi click vào thay đổi thông tin hình ảnh và từ vựng////////////////////
 
-
+                repeat.setText("Lập lại sau 6 phút");
+                inputText.setText(answer.getText());
 
                 Boolean found1;
                 Boolean found2;
@@ -806,7 +817,8 @@ public class Content_course extends AppCompatActivity {
 
 
                 ///////////////////////////////Khi click vào thay đổi thông tin hình ảnh và từ vựng////////////////////
-
+                inputText.setText(answer.getText());
+                repeat.setText("Lập lại sau 3 ngày");
 
 
                 Boolean found1;
@@ -1069,8 +1081,8 @@ public class Content_course extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-
-
+                repeat.setText("Lập lại sau 6 ngày");
+                inputText.setText(answer.getText());
                 ///////////////////////////////Khi click vào thay đổi thông tin hình ảnh và từ vựng////////////////////
 
 
@@ -1336,9 +1348,9 @@ public class Content_course extends AppCompatActivity {
             public void onClick(View view) {
 
 
-
+                repeat.setText("Lập lại sau 10p");
                 ///////////////////////////////Khi click vào thay đổi thông tin hình ảnh và từ vựng////////////////////
-
+                inputText.setText(answer.getText());
 
 
                 Boolean found1;
@@ -1601,8 +1613,8 @@ public class Content_course extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-
-
+                repeat.setText("Lập lai sau 1 ngày");
+                inputText.setText(answer.getText());
                 ///////////////////////////////Khi click vào thay đổi thông tin hình ảnh và từ vựng////////////////////
 
 
@@ -1921,6 +1933,7 @@ public class Content_course extends AppCompatActivity {
 
             @Override
             public void onCallBackWord(List<String> listw) {
+
                 if (listw.size() - 1> demw) {
 
                     demw++;
@@ -1928,6 +1941,7 @@ public class Content_course extends AppCompatActivity {
                 }
 
                 WordContent.setText(listw.get(demw));
+
 
                 System.out.println(listw.size());
                 System.out.println(demw);
@@ -1948,8 +1962,8 @@ public class Content_course extends AppCompatActivity {
                     demi++;
 
                 }
-
                 Glide.with(Content_course.this).load(listi.get(demi)).into(image);
+
 
 
 
@@ -1975,45 +1989,90 @@ public class Content_course extends AppCompatActivity {
         String getUid  = users.getUid();
 
 
-        DatabaseReference course = FirebaseDatabase.getInstance().getReference().child("/users/"+getUid+"/course/"+key+"/Vocabulary/"+key);
 
 
 
 
-        final List<String> word = new ArrayList<>();
-        final List<String> image = new ArrayList<>();
 
-        course.addValueEventListener(new ValueEventListener() {
-            int  i ;
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                try {
-                    GenericTypeIndicator<List<Vocabulary>> t = new GenericTypeIndicator<List<Vocabulary>>() {};
-                    List<Vocabulary> messages = snapshot.getValue(t);
-                    int tam = messages.size();
-                    for (i = 0;i<=tam-1;i++)
-                    {
-                        assert messages != null;
-                        image.add(messages.get(i).getImage());
-                        word.add(messages.get(i).getWord());
 
-                    }
-                    firebaseCallback.onCallBackWord(word);
-                    firebaseCallback.onCallBackimage(image);
-                }catch (Exception e)
-                {
-                    Notdata.setVisibility(View.VISIBLE);
 
-                }
 
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
 
-                Toast.makeText(Content_course.this, error.toString(), Toast.LENGTH_SHORT).show();
-            }
-        });
+
+
+                    final List<String> word = new ArrayList<>();
+                    final List<String> image = new ArrayList<>();
+
+        FirebaseDatabase.getInstance().getReference().child("/users/"+getUid+"/course/"+key+"/Vocabulary/"+key+"learn").orderByChild("temporary_time").startAt(0).endAt(currentDate).addValueEventListener(new ValueEventListener() {
+                        int  i ;
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.getChildrenCount()>0) {
+                                try {
+                                    GenericTypeIndicator<List<Vocabulary2>> t = new GenericTypeIndicator<List<Vocabulary2>>() {
+                                    };
+                                    List<Vocabulary2> messages = snapshot.getValue(t);
+                                    int tam = messages.size();
+                                    System.out.println(tam);
+                                    for (i = 0; i <= tam - 1; i++) {
+                                        assert messages != null;
+                                        image.add(messages.get(i).getImage());
+                                        word.add(messages.get(i).getWord());
+
+                                    }
+                                    firebaseCallback.onCallBackWord(word);
+                                    firebaseCallback.onCallBackimage(image);
+                                } catch (Exception e) {
+                                    System.out.println(e);
+
+                                }
+                            }
+                            else {
+                                FirebaseDatabase.getInstance().getReference().child("/users/"+getUid+"/course/"+key+"/Vocabulary/"+key+"learn").orderByChild("temporary_time").startAt(0).endAt(currentDatefix).addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        try {
+                                            GenericTypeIndicator<List<Vocabulary2>> t2 = new GenericTypeIndicator<List<Vocabulary2>>() {};
+                                            List<Vocabulary2> messages = snapshot.getValue(t2);
+                                            int tam = messages.size();
+
+                                            for (i = 0;i<=tam-1;i++)
+                                            {
+                                                assert messages != null;
+                                                image.add(messages.get(i).getImage());
+                                                word.add(messages.get(i).getWord());
+                                            }
+
+                                            firebaseCallback.onCallBackWord(word);
+                                            firebaseCallback.onCallBackimage(image);
+                                        }catch (Exception e)
+                                        {
+
+                                            System.out.println("Không có nghĩa");
+                                            System.out.println(e.getMessage());
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                            Toast.makeText(Content_course.this, error.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+
+
+
     }
 
 
@@ -2025,48 +2084,86 @@ public class Content_course extends AppCompatActivity {
         String getUid  = users.getUid();
 
 
-        DatabaseReference course = FirebaseDatabase.getInstance().getReference().child("/users/"+getUid+"/course/"+key+"/Vocabulary/"+key);
 
 
 
-        final List<String> mean = new ArrayList<>();
 
-        course.addValueEventListener(new ValueEventListener() {
-            int  i ;
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists())
-                {
-                    try {
-                        GenericTypeIndicator<List<Vocabulary>> t = new GenericTypeIndicator<List<Vocabulary>>() {};
-                        List<Vocabulary> messages = snapshot.getValue(t);
-                        int tam = messages.size();
+                    final List<String> mean = new ArrayList<>();
 
-                        for (i = 0;i<=tam-1;i++)
-                        {
-                            assert messages != null;
-                            mean.add(messages.get(i).getMeans());
+        FirebaseDatabase.getInstance().getReference().child("/users/"+getUid+"/course/"+key+"/Vocabulary/"+key+"learn").orderByChild("temporary_time").startAt(0).endAt(currentDate).addValueEventListener(new ValueEventListener() {
+                        int  i ;
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.getChildrenCount()>0  )
+                            {
+                                try {
+                                    GenericTypeIndicator<List<Vocabulary2>> t = new GenericTypeIndicator<List<Vocabulary2>>() {};
+                                    List<Vocabulary2> messages = snapshot.getValue(t);
+                                    int tam = messages.size();
+
+                                    for (i = 0;i<=tam-1;i++)
+                                    {
+                                        assert messages != null;
+                                        mean.add(messages.get(i).getMeans());
+                                    }
+
+                                    firebaseCallback.onCallBack(mean);
+                                }catch (Exception e)
+                                {
+
+                                    System.out.println("Không có nghĩa");
+                                    System.out.println(e.getMessage());
+                                }
+
+                            }
+
+                            else {
+                                FirebaseDatabase.getInstance().getReference().child("/users/"+getUid+"/course/"+key+"/Vocabulary/"+key+"learn").orderByChild("temporary_time").startAt(0).endAt(currentDatefix).addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        try {
+                                            GenericTypeIndicator<List<Vocabulary2>> t2 = new GenericTypeIndicator<List<Vocabulary2>>() {};
+                                            List<Vocabulary2> messages = snapshot.getValue(t2);
+                                            int tam = messages.size();
+
+                                            for (i = 0;i<=tam-1;i++)
+                                            {
+                                                assert messages != null;
+                                                mean.add(messages.get(i).getMeans());
+                                            }
+
+                                            firebaseCallback.onCallBack(mean);
+                                        }catch (Exception e)
+                                        {
+
+                                            System.out.println("Không có nghĩa");
+                                            System.out.println(e.getMessage());
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+                            }
+
                         }
 
-                        firebaseCallback.onCallBack(mean);
-                    }catch (Exception e)
-                    {
-                        Notdata.setVisibility(View.VISIBLE);
-                    }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Toast.makeText(Content_course.this, error.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
 
-                }
 
-                else {
-                    Toast.makeText(Content_course.this, "Không có dữ liệu trong bài học", Toast.LENGTH_SHORT).show();
-                }
 
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(Content_course.this, error.toString(), Toast.LENGTH_SHORT).show();
-            }
-        });
+
+
+
+
+
     }
 
     private interface FirebaseCallbackWord {
@@ -2636,26 +2733,7 @@ public class Content_course extends AppCompatActivity {
 
 
 
-    public void flipCard(View font,View back) {
 
-
-
-
-        if (!mIsBackVisible) {
-            mSetRightOut.setTarget(font);
-            mSetLeftIn.setTarget(back);
-            mSetRightOut.start();
-            mSetLeftIn.start();
-            mIsBackVisible = true;
-        } else {
-            mSetRightOut.setTarget(back);
-            mSetLeftIn.setTarget(font);
-            mSetRightOut.start();
-            mSetLeftIn.start();
-            mIsBackVisible = false;
-        }
-
-    }
 
 
 }

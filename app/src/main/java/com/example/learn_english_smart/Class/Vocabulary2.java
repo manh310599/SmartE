@@ -1,24 +1,30 @@
 package com.example.learn_english_smart.Class;
 
-import java.util.List;
 
-public class Vocabulary {
+
+
+
+public class Vocabulary2 {
+
+
     String word;
     String image;
     String means;
-    String temporary_time;
+    long temporary_time ;
+    float ef ;
+    long note;
 
-    public Vocabulary() {
+
+    public Vocabulary2() {
     }
 
-
-
-
-    public Vocabulary(String word, String image, String means, String temporary_time) {
+    public Vocabulary2(String word, String image, String means, long temporary_time, float ef, long note) {
         this.word = word;
         this.image = image;
         this.means = means;
         this.temporary_time = temporary_time;
+        this.ef = ef;
+        this.note = note;
     }
 
     public String getWord() {
@@ -45,11 +51,27 @@ public class Vocabulary {
         this.means = means;
     }
 
-    public String getTemporary_time() {
+    public long getTemporary_time() {
         return temporary_time;
     }
 
-    public void setTemporary_time(String temporary_time) {
+    public void setTemporary_time(long temporary_time) {
         this.temporary_time = temporary_time;
+    }
+
+    public float getEf() {
+        return ef;
+    }
+
+    public void setEf(float ef) {
+        this.ef = ef;
+    }
+
+    public long getNote() {
+        return note;
+    }
+
+    public void setNote(long note) {
+        this.note = note;
     }
 }

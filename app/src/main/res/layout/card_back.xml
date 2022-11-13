@@ -54,6 +54,15 @@
         android:textColor="@color/white"
         android:padding="10sp"
         />
-
+    <TextView
+        android:id="@+id/repeat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20sp"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:textColor="@color/red"
+        android:text="Lập lại"
+        android:gravity="center"/>
 
 </LinearLayout>

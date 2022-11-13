@@ -18,18 +18,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.example.learn_english_smart.Class.Vocabulary2;
 import com.example.learn_english_smart.Class.course;
 import com.example.learn_english_smart.Course.Content_course;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import me.virtualiz.blurshadowimageview.BlurShadowImageView;
 
@@ -92,7 +96,7 @@ public class DashboardFragmentApdapter extends RecyclerView.Adapter<DashboardFra
                 String uid = user.getUid();
 
 
-                FirebaseDatabase.getInstance().getReference().child("/users/"+uid+"/course").addListenerForSingleValueEvent(new ValueEventListener() {
+                FirebaseDatabase.getInstance().getReference().child("/users/"+uid+"/course/3000_vocabulary/Vocabulary/3000_vocabulary").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists())
@@ -100,12 +104,12 @@ public class DashboardFragmentApdapter extends RecyclerView.Adapter<DashboardFra
                             Toast.makeText(context, "Bạn đã đăng kí kháo học này rồi", Toast.LENGTH_SHORT).show();
                         }
                         else {
-                            FirebaseDatabase.getInstance().getReference().child("/course/").addListenerForSingleValueEvent(new ValueEventListener() {
+                        DatabaseReference data =  FirebaseDatabase.getInstance().getReference().child("/course");
+                        data.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    FirebaseDatabase.getInstance().getReference().child("/users/"+uid+"/course").setValue(dataSnapshot.getValue());
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot1) {
 
-
+                                        FirebaseDatabase.getInstance().getReference("/users/"+uid+"/course").setValue(dataSnapshot1.getValue());
 
                                 }
 
@@ -115,7 +119,8 @@ public class DashboardFragmentApdapter extends RecyclerView.Adapter<DashboardFra
                                 }
                             });
 
-                            Toast.makeText(context, "Khóa học đã được đăng kí", Toast.LENGTH_SHORT).show();
+
+
                         }
                     }
 
