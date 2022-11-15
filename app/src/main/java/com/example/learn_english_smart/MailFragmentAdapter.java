@@ -104,7 +104,7 @@ public class MailFragmentAdapter extends RecyclerView.Adapter<MailFragmentAdapte
                 String timestamp = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
 
                 String currentDateString = new SimpleDateFormat("yyyyMMddHHmmss").format(Calendar.getInstance().getTime());
-                long currentDate = Long.parseLong(currentDateString)*1000;
+                long now = System.currentTimeMillis();
 
                 FirebaseDatabase.getInstance().getReference().child("/users/"+uid+"/course/"+course1.getType()+"/Vocabulary/"+course1.getType()+"learn/flag").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -150,7 +150,7 @@ public class MailFragmentAdapter extends RecyclerView.Adapter<MailFragmentAdapte
                                                                 for (int i = (int) c; i<=c+19; i++)
                                                                 {
 
-                                                                    Vocabulary2 vocabulary2 = new Vocabulary2(messages.get(i).getWord(),messages.get(i).getImage(),messages.get(i).getMeans(),currentDate,messages.get(i).getEf(),messages.get(i).getNote(),0,1);
+                                                                    Vocabulary2 vocabulary2 = new Vocabulary2(messages.get(i).getWord(),messages.get(i).getImage(),messages.get(i).getMeans(),now,messages.get(i).getEf(),messages.get(i).getNote(),0,1);
 
 
                                                                     database1.child(String.valueOf(i)).setValue(vocabulary2);
@@ -208,7 +208,7 @@ public class MailFragmentAdapter extends RecyclerView.Adapter<MailFragmentAdapte
                                                         for (int i = 0; i<=19; i++)
                                                         {
 
-                                                            Vocabulary2 vocabulary2 = new Vocabulary2(messages.get(i).getWord(),messages.get(i).getImage(),messages.get(i).getMeans(),currentDate,2.5F,i,0,1 );
+                                                            Vocabulary2 vocabulary2 = new Vocabulary2(messages.get(i).getWord(),messages.get(i).getImage(),messages.get(i).getMeans(),now,2.5F,i,0,1 );
 
 
                                                             database1.child(String.valueOf(i)).setValue(vocabulary2);

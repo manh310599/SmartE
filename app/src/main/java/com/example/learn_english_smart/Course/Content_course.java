@@ -25,8 +25,10 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.learn_english_smart.Class.Vocabulary2;
+import com.example.learn_english_smart.Class.Vocabulary3;
 import com.example.learn_english_smart.Lottie_BottomBar;
 import com.example.learn_english_smart.R;
+import com.google.android.gms.common.util.JsonUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -35,16 +37,20 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.lib.customedittext.CustomEditText;
 
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 
 public class Content_course extends AppCompatActivity {
@@ -66,15 +72,13 @@ public class Content_course extends AppCompatActivity {
 
     String key;
     @SuppressLint("SimpleDateFormat")
-    String currentDateString = new SimpleDateFormat("yyyyMMddHHmmss").format(Calendar.getInstance().getTime());
-    long currentDate = Long.parseLong(currentDateString) * 1000;
 
+    long now = System.currentTimeMillis();
 
     @SuppressLint("SimpleDateFormat")
-    String currentDateString1 = new SimpleDateFormat("yyyyMMdd235959").format(Calendar.getInstance().getTime());
-    long currentDatefix = Long.parseLong(currentDateString1)*1000;
 
 
+    int demNote = -1;
     int demi = 0;
     int demw = 0;
     int demm = 0;
@@ -543,7 +547,7 @@ public class Content_course extends AppCompatActivity {
 
                 });
                 long time_count = 100000;
-                Equal(time_count+currentDate,0);
+                Equal(0);
                 onClickabsolutely_not(font_layout,back_layout);
             }
 
@@ -795,7 +799,7 @@ public class Content_course extends AppCompatActivity {
                                         {
                                             demm++;
                                         }
-                                        if (list.size() == demi)
+                                        if (list.size() == demm)
                                         {
                                             demm = 0;
                                         }
@@ -815,7 +819,7 @@ public class Content_course extends AppCompatActivity {
 
                 });
                 int time_count = 600000;
-                Equal(time_count+currentDate,1);
+                Equal(1);
                 onClickUpHardtoremember(font_layout,back_layout);
             }
 
@@ -1088,7 +1092,7 @@ public class Content_course extends AppCompatActivity {
 
                 });
                 int time_count = 1000000;
-                Equal(time_count+currentDate,4);
+                Equal(4);
                 onClickUpEasy(font_layout,back_layout);
             }
 
@@ -1358,7 +1362,7 @@ public class Content_course extends AppCompatActivity {
 
 
                 });
-                Equal(currentDate+ 6000000L *1000,5);
+                Equal(5);
                 onClickUpperfect(font_layout,back_layout);
             }
 
@@ -1628,7 +1632,7 @@ public class Content_course extends AppCompatActivity {
 
 
                 });
-                Equal(currentDate+1000000,2);
+                Equal(2);
                 onClickconsider(font_layout,back_layout);
             }
 
@@ -1898,7 +1902,7 @@ public class Content_course extends AppCompatActivity {
 
 
                 });
-                Equal(currentDate+1000000000,3);
+                Equal(3);
                 onClickDo_remember_but_long(font_layout,back_layout);
             }
 
@@ -1961,7 +1965,7 @@ public class Content_course extends AppCompatActivity {
 
     }
 
-    private void  Equal(long a,int quality) {
+    private void  Equal(int quality) {
 
 
         readDataWordImage(new FirebaseCallbackWord() {
@@ -1969,28 +1973,8 @@ public class Content_course extends AppCompatActivity {
             @Override
             public void onCallBackWord(List<String> listw) {
 
-//                easiness = (float) Math.max(1.3, easiness + 0.1 - (5.0 - quality) * (0.08 + (5.0 - quality) * 0.02));
-//
-//                // repetitions
-//                if (quality < 3) {
-//                    repetitions = 0;
-//                } else {
-//                    repetitions += 1;
-//                }
-//
-//                // interval
-//                if (repetitions <= 1) {
-//                    interval = 1;
-//                } else if (repetitions == 2) {
-//                    interval = 6;
-//                } else {
-//                    interval = Math.round(interval * easiness);
-//                }
-//
-//                // next practice
-//                int minisecondsInDay = 60 * 60 * 24*1000;
-//                long now = System.currentTimeMillis();
-//                long nextPracticeDate = currentDate + minisecondsInDay*interval;
+
+               
 
                 if (listw.size() > demw) {
 
@@ -2041,8 +2025,109 @@ public class Content_course extends AppCompatActivity {
 
             }
 
+
+
+
+
             @Override
             public void onCallBackNote(List<Long> listNote) {
+
+                if (listNote.size() > demNote) {
+
+                    demNote++;
+
+                }
+
+                if (listNote.size()  == demNote)
+                {
+                    demNote = 0;
+                }
+                FirebaseUser users = FirebaseAuth.getInstance().getCurrentUser();
+                String getUid  = users.getUid();
+
+           FirebaseDatabase.getInstance().getReference().child("/users/"+getUid+"/course/"+key+"/Vocabulary/"+key+"learn").orderByChild("note").equalTo(listNote.get(demNote)).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot dataSnapshot: snapshot.getChildren())
+                        {
+                            Vocabulary2 vocabulary2 = dataSnapshot.getValue(Vocabulary2.class);
+
+                            Vocabulary2 vocabulary = new Vocabulary2();
+                            // retrieve the stored values (default values if new cards)
+                            long repetitions = vocabulary2.getRepetitions();
+                            float easiness = vocabulary2.getEf();
+                            long interval = vocabulary2.getInterval();
+
+                            // easiness factor
+                            easiness = (float) Math.max(1.3, easiness + 0.1 - (5.0 - quality) * (0.08 + (5.0 - quality) * 0.02));
+                            vocabulary.setEf(easiness);
+                            FirebaseDatabase.getInstance().getReference().child("/users/"+getUid+"/course/"+key+"/Vocabulary/"+key+"learn").child(String.valueOf(listNote.get(demNote))).updateChildren(vocabulary.toMap3());
+
+
+                            // repetitions
+                            if (quality < 3) {
+
+                                vocabulary.setRepetitions(0);
+                                FirebaseDatabase.getInstance().getReference().child("/users/"+getUid+"/course/"+key+"/Vocabulary/"+key+"learn").child(String.valueOf(listNote.get(demNote))).updateChildren(vocabulary.toMap());
+
+
+                            } else {
+                                vocabulary.setRepetitions(vocabulary2.getRepetitions()+1);
+                                FirebaseDatabase.getInstance().getReference().child("/users/"+getUid+"/course/"+key+"/Vocabulary/"+key+"learn").child(String.valueOf(listNote.get(demNote))).updateChildren(vocabulary.toMap());
+
+                                if (repetitions <= 1) {
+                                    interval = 1;
+                                    vocabulary.setInterval(1);
+                                    FirebaseDatabase.getInstance().getReference().child("/users/"+getUid+"/course/"+key+"/Vocabulary/"+key+"learn").child(String.valueOf(listNote.get(demNote))).updateChildren(vocabulary.toMap1());
+
+                                } else if (repetitions == 2) {
+                                    interval = 6;
+                                    vocabulary.setInterval(6);
+                                    FirebaseDatabase.getInstance().getReference().child("/users/"+getUid+"/course/"+key+"/Vocabulary/"+key+"learn").child(String.valueOf(listNote.get(demNote))).updateChildren(vocabulary.toMap1());
+                                } else {
+                                    interval = Math.round(interval * easiness);
+                                    vocabulary.setInterval(interval);
+                                    FirebaseDatabase.getInstance().getReference().child("/users/"+getUid+"/course/"+key+"/Vocabulary/"+key+"learn").child(String.valueOf(listNote.get(demNote))).updateChildren(vocabulary.toMap1());
+                                }
+
+                                // next practice
+                                int millisecondsInDay = 60 * 60 * 24 * 1000;
+
+                                long nextPracticeDate = now + millisecondsInDay*interval;
+                                vocabulary.setTemporary_time(nextPracticeDate);
+                                FirebaseDatabase.getInstance().getReference().child("/users/"+getUid+"/course/"+key+"/Vocabulary/"+key+"learn").child(String.valueOf(listNote.get(demNote))).updateChildren(vocabulary.toMap2());
+                                long now = System.currentTimeMillis();
+                                Toast.makeText(Content_course.this, "test đếm note: "+now, Toast.LENGTH_SHORT).show();;
+                            }
+
+                            // interval
+
+
+
+
+                            // Create a calendar object that will convert the date and time value in milliseconds to date.
+
+//                            int notifi = (int) (millisecondsInDay/1000/60/60*interval);
+//                            if (notifi>=24)
+//                            {
+//                                int t = notifi/24;
+//                                int e = notifi%24;
+//                                Toast.makeText(Content_course.this, "Lặp lại sau: "+t+" ngày "+e+" giờ", Toast.LENGTH_SHORT).show();
+//                            }
+//                            repeat.setText(dateFormatted);
+
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+
 
             }
 
@@ -2050,6 +2135,12 @@ public class Content_course extends AppCompatActivity {
         });
 
     }
+
+
+
+
+
+
 
 
     private void readDataWordImage(FirebaseCallbackWord firebaseCallback)
@@ -2070,29 +2161,35 @@ public class Content_course extends AppCompatActivity {
 
 
 
-
+                    final List<Vocabulary2> g = new ArrayList<>();
                     final List<String> word = new ArrayList<>();
                     final List<String> image = new ArrayList<>();
                     final List<Long> note = new ArrayList<>();
 
-        FirebaseDatabase.getInstance().getReference().child("/users/"+getUid+"/course/"+key+"/Vocabulary/"+key+"learn").orderByChild("temporary_time").startAt(0).endAt(currentDate).addValueEventListener(new ValueEventListener() {
+      Query query =   FirebaseDatabase.getInstance().getReference().child("/users/"+getUid+"/course/"+key+"/Vocabulary/"+key+"learn").orderByChild("temporary_time").startAt(0);
+      query.endAt(now).addListenerForSingleValueEvent(new ValueEventListener() {
                         int  i ;
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             word.clear();
                             image.clear();
+                            note.clear();
+                            long tam = snapshot.getChildrenCount();
                             if (snapshot.getChildrenCount()>0) {
                                 try {
-                                    GenericTypeIndicator<List<Vocabulary2>> t = new GenericTypeIndicator<List<Vocabulary2>>() {};
-                                    List<Vocabulary2> messages = snapshot.getValue(t);
-                                    int tam = messages.size();
-                                    System.out.println(tam);
-                                    for (i = 0; i <= tam - 1; i++) {
-                                        assert messages != null;
-                                        image.add(messages.get(i).getImage());
-                                        word.add(messages.get(i).getWord());
-                                        note.add(messages.get(i).getNote());
+                                    for (DataSnapshot dataSnapshot:snapshot.getChildren())
+                                    {
+                                        Vocabulary2 vocabulary2 = dataSnapshot.getValue(Vocabulary2.class);
+                                        g.add(vocabulary2);
                                     }
+
+                                    for (int i = 0;i<tam;i++)
+                                    {
+                                        word.add(g.get(i).getWord());
+                                        image.add(g.get(i).getImage());
+                                        note.add(g.get(i).getNote());
+                                    }
+
                                     firebaseCallback.onCallBackWord(word);
                                     firebaseCallback.onCallBackimage(image);
                                     firebaseCallback.onCallBackNote(note);
@@ -2102,36 +2199,7 @@ public class Content_course extends AppCompatActivity {
                                 }
                             }
                             else {
-                                FirebaseDatabase.getInstance().getReference().child("/users/"+getUid+"/course/"+key+"/Vocabulary/"+key+"learn").orderByChild("temporary_time").startAt(0).endAt(currentDatefix).addValueEventListener(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                        try {
-                                            GenericTypeIndicator<List<Vocabulary2>> t2 = new GenericTypeIndicator<List<Vocabulary2>>() {};
-                                            List<Vocabulary2> messages = snapshot.getValue(t2);
-                                            int tam = messages.size();
-
-                                            for (i = 0;i<=tam-1;i++)
-                                            {
-                                                assert messages != null;
-                                                image.add(messages.get(i).getImage());
-                                                word.add(messages.get(i).getWord());
-                                            }
-
-                                            firebaseCallback.onCallBackWord(word);
-                                            firebaseCallback.onCallBackimage(image);
-                                        }catch (Exception e)
-                                        {
-
-                                            System.out.println("Không có nghĩa");
-                                            System.out.println(e.getMessage());
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError error) {
-
-                                    }
-                                });
+                                Notdata.setVisibility(View.VISIBLE);
                             }
 
                         }
@@ -2161,29 +2229,35 @@ public class Content_course extends AppCompatActivity {
 
 
 
-                    final List<String> mean = new ArrayList<>();
+                    final List<Vocabulary2> mean = new ArrayList<>();
 
-        FirebaseDatabase.getInstance().getReference().child("/users/"+getUid+"/course/"+key+"/Vocabulary/"+key+"learn").orderByChild("temporary_time").startAt(0).endAt(currentDate).addValueEventListener(new ValueEventListener() {
+       FirebaseDatabase.getInstance().getReference().child("/users/"+getUid+"/course/"+key+"/Vocabulary/"+key+"learn").orderByChild("temporary_time").startAt(0).endAt(now).addListenerForSingleValueEvent(new ValueEventListener() {
                         int  i ;
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             mean.clear();
                             if (snapshot.getChildrenCount()>0  )
                             {
-                                try {
-                                    GenericTypeIndicator<List<Vocabulary2>> t = new GenericTypeIndicator<List<Vocabulary2>>() {};
-                                    List<Vocabulary2> messages = snapshot.getValue(t);
-                                    int tam = messages.size();
 
-                                    for (i = 0;i<=tam-1;i++)
+                                    long tam = snapshot.getChildrenCount();
+
+
+
+                              try {
+                                  for (DataSnapshot beaconSnapshot: snapshot.getChildren()) {
+                                   Vocabulary2 mBeacon = beaconSnapshot.getValue(Vocabulary2.class);
+                                    mean.add(mBeacon);
+                                    }
+                                   System.out.println(tam);
+                                    List<String> readmean = new ArrayList<>();
+                                    for (int i = 0;i<tam;i++)
                                     {
-                                        assert messages != null;
-                                        mean.add(messages.get(i).getMeans());
+                                        readmean.add(mean.get(i).getMeans());
                                     }
 
-                                    firebaseCallback.onCallBack(mean);
+                                    firebaseCallback.onCallBack(readmean);
                                 }catch (Exception e)
-                                {
+                               {
 
                                     System.out.println("Không có nghĩa");
                                     System.out.println(e.getMessage());
@@ -2192,34 +2266,7 @@ public class Content_course extends AppCompatActivity {
                             }
 
                             else {
-                                FirebaseDatabase.getInstance().getReference().child("/users/"+getUid+"/course/"+key+"/Vocabulary/"+key+"learn").orderByChild("temporary_time").startAt(0).endAt(currentDatefix).addValueEventListener(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                        try {
-                                            GenericTypeIndicator<List<Vocabulary2>> t2 = new GenericTypeIndicator<List<Vocabulary2>>() {};
-                                            List<Vocabulary2> messages = snapshot.getValue(t2);
-                                            int tam = messages.size();
-
-                                            for (i = 0;i<=tam-1;i++)
-                                            {
-                                                assert messages != null;
-                                                mean.add(messages.get(i).getMeans());
-                                            }
-
-                                            firebaseCallback.onCallBack(mean);
-                                        }catch (Exception e)
-                                        {
-
-                                            System.out.println("Không có nghĩa");
-                                            System.out.println(e.getMessage());
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError error) {
-
-                                    }
-                                });
+                                Notdata.setVisibility(View.VISIBLE);
                             }
 
                         }
@@ -2244,9 +2291,26 @@ public class Content_course extends AppCompatActivity {
         void onCallBackWord(List<String> listw);
         void onCallBackimage(List<String> listi);
         void onCallBackNote(List<Long> listNote);
+
     }
 
+    private interface FirebaseCallbackDataEF {
+        void onCallBackEF(List<Float> listEF);
 
+
+    }
+
+    private interface FirebaseCallbackDatatemporary_time{
+        void onCallBackinterval(List<Long> listTemporary_time);
+    }
+
+    private interface FirebaseCallbackDataInterval{
+        void onCallBackinterval(List<Long> listInterval);
+    }
+
+    private interface FirebaseCallbackDataRepetitions{
+        void onCallBackRepetitions(List<Long> listRepetitions);
+    }
 
     private interface FirebaseCallbackMean {
         void onCallBack(List<String> list);

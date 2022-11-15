@@ -96,7 +96,26 @@ public class Vocabulary2 {
 
     public Map<String,Object> toMap() {
         HashMap<String,Object> result = new HashMap<>();
+        result.put("repetitions",repetitions);
+        return  result;
+    }
+
+    public Map<String,Object> toMap1() {
+        HashMap<String,Object> result = new HashMap<>();
+        result.put("interval",interval);
+        return  result;
+    }
+
+    public Map<String,Object> toMap2() {
+        HashMap<String,Object> result = new HashMap<>();
         result.put("temporary_time",temporary_time);
         return  result;
     }
+
+    public Map<String,Object> toMap3() {
+        HashMap<String,Object> result = new HashMap<>();
+        result.put("ef",ef);
+        return  result;
+    }
+
 }
