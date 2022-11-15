@@ -19,6 +19,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.learn_english_smart.Class.Vocabulary2;
+import com.example.learn_english_smart.Class.Vocabulary3;
 import com.example.learn_english_smart.Class.course;
 import com.example.learn_english_smart.Course.Content_course;
 import com.google.firebase.auth.FirebaseAuth;
@@ -104,12 +105,21 @@ public class DashboardFragmentApdapter extends RecyclerView.Adapter<DashboardFra
                             Toast.makeText(context, "Bạn đã đăng kí kháo học này rồi", Toast.LENGTH_SHORT).show();
                         }
                         else {
-                        DatabaseReference data =  FirebaseDatabase.getInstance().getReference().child("/course");
+                        DatabaseReference data =  FirebaseDatabase.getInstance().getReference().child("/course/3000_vocabulary/Vocabulary/3000_Vocabulary");
                         data.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot1) {
+                                        long a = dataSnapshot1.getChildrenCount();
 
-                                        FirebaseDatabase.getInstance().getReference("/users/"+uid+"/course").setValue(dataSnapshot1.getValue());
+                                    GenericTypeIndicator<List<Vocabulary3>> t = new GenericTypeIndicator<List<Vocabulary3>>() {};
+                                    List<Vocabulary3> messages = dataSnapshot1.getValue(t);
+
+                                        for (int i = 0;i<a;i++)
+                                        {
+                                            Vocabulary3 vocabulary3 = new Vocabulary3(messages.get(i).getWord(),messages.get(i).getImage(),messages.get(i).getMeans(),0,2.5F,i);
+                                            FirebaseDatabase.getInstance().getReference("/users/"+uid+"/course/3000_vocabulary/Vocabulary/3000_vocabulary").child(String.valueOf(i)).setValue(vocabulary3);
+                                        }
+
 
                                 }
 

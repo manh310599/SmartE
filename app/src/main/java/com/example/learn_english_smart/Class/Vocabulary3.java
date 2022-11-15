@@ -1,11 +1,6 @@
 package com.example.learn_english_smart.Class;
 
-
-import java.util.HashMap;
-import java.util.Map;
-
-public class Vocabulary2 {
-
+public class Vocabulary3 {
 
     String word;
     String image;
@@ -13,21 +8,17 @@ public class Vocabulary2 {
     long temporary_time ;
     float ef ;
     long note;
-    long repetitions;
-    long interval;
 
-    public Vocabulary2() {
+    public Vocabulary3() {
     }
 
-    public Vocabulary2(String word, String image, String means, long temporary_time, float ef, long note, long repetitions, long interval) {
+    public Vocabulary3(String word, String image, String means, long temporary_time, float ef, long note) {
         this.word = word;
         this.image = image;
         this.means = means;
         this.temporary_time = temporary_time;
         this.ef = ef;
         this.note = note;
-        this.repetitions = repetitions;
-        this.interval = interval;
     }
 
     public String getWord() {
@@ -76,27 +67,5 @@ public class Vocabulary2 {
 
     public void setNote(long note) {
         this.note = note;
-    }
-
-    public long getRepetitions() {
-        return repetitions;
-    }
-
-    public void setRepetitions(long repetitions) {
-        this.repetitions = repetitions;
-    }
-
-    public long getInterval() {
-        return interval;
-    }
-
-    public void setInterval(long interval) {
-        this.interval = interval;
-    }
-
-    public Map<String,Object> toMap() {
-        HashMap<String,Object> result = new HashMap<>();
-        result.put("temporary_time",temporary_time);
-        return  result;
     }
 }

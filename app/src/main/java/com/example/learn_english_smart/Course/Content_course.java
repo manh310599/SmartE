@@ -13,7 +13,6 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 
-import android.util.Log;
 import android.view.View;
 
 import android.widget.Button;
@@ -68,12 +67,12 @@ public class Content_course extends AppCompatActivity {
     String key;
     @SuppressLint("SimpleDateFormat")
     String currentDateString = new SimpleDateFormat("yyyyMMddHHmmss").format(Calendar.getInstance().getTime());
-    long currentDate = Long.parseLong(currentDateString);
+    long currentDate = Long.parseLong(currentDateString) * 1000;
 
 
     @SuppressLint("SimpleDateFormat")
     String currentDateString1 = new SimpleDateFormat("yyyyMMdd235959").format(Calendar.getInstance().getTime());
-    long currentDatefix = Long.parseLong(currentDateString1);
+    long currentDatefix = Long.parseLong(currentDateString1)*1000;
 
 
     int demi = 0;
@@ -136,6 +135,11 @@ public class Content_course extends AppCompatActivity {
             @Override
             public void onCallBackimage(List<String> listi) {
                 Glide.with(Content_course.this).load(listi.get(0)).into(image);
+            }
+
+            @Override
+            public void onCallBackNote(List<Long> listNote) {
+
             }
         });
 
@@ -515,9 +519,13 @@ public class Content_course extends AppCompatActivity {
                                 readDataMean(new FirebaseCallbackMean() {
                                     @Override
                                     public void onCallBack(List<String> list) {
-                                        if (list.size() - 1 > demm)
+                                        if (list.size()  > demm)
                                         {
                                             demm++;
+                                        }
+                                        if (list.size() == demi)
+                                        {
+                                            demm = 0;
                                         }
                                     }
                                 });
@@ -534,7 +542,8 @@ public class Content_course extends AppCompatActivity {
 
 
                 });
-                Equal();
+                long time_count = 100000;
+                Equal(time_count+currentDate,0);
                 onClickabsolutely_not(font_layout,back_layout);
             }
 
@@ -782,9 +791,13 @@ public class Content_course extends AppCompatActivity {
                                 readDataMean(new FirebaseCallbackMean() {
                                     @Override
                                     public void onCallBack(List<String> list) {
-                                        if (list.size() - 1 > demm)
+                                        if (list.size()  > demm)
                                         {
                                             demm++;
+                                        }
+                                        if (list.size() == demi)
+                                        {
+                                            demm = 0;
                                         }
                                     }
                                 });
@@ -801,7 +814,8 @@ public class Content_course extends AppCompatActivity {
 
 
                 });
-                Equal();
+                int time_count = 600000;
+                Equal(time_count+currentDate,1);
                 onClickUpHardtoremember(font_layout,back_layout);
             }
 
@@ -1049,9 +1063,13 @@ public class Content_course extends AppCompatActivity {
                                 readDataMean(new FirebaseCallbackMean() {
                                     @Override
                                     public void onCallBack(List<String> list) {
-                                        if (list.size() - 1 > demm)
+                                        if (list.size()  > demm)
                                         {
                                             demm++;
+                                        }
+                                        if (list.size() == demi)
+                                        {
+                                            demm = 0;
                                         }
                                     }
                                 });
@@ -1069,7 +1087,8 @@ public class Content_course extends AppCompatActivity {
 
 
                 });
-                Equal();
+                int time_count = 1000000;
+                Equal(time_count+currentDate,4);
                 onClickUpEasy(font_layout,back_layout);
             }
 
@@ -1315,9 +1334,13 @@ public class Content_course extends AppCompatActivity {
                                 readDataMean(new FirebaseCallbackMean() {
                                     @Override
                                     public void onCallBack(List<String> list) {
-                                        if (list.size() - 1 > demm)
+                                        if (list.size()  > demm)
                                         {
                                             demm++;
+                                        }
+                                        if (list.size() == demi)
+                                        {
+                                            demm = 0;
                                         }
                                     }
                                 });
@@ -1335,7 +1358,7 @@ public class Content_course extends AppCompatActivity {
 
 
                 });
-                Equal();
+                Equal(currentDate+ 6000000L *1000,5);
                 onClickUpperfect(font_layout,back_layout);
             }
 
@@ -1581,9 +1604,13 @@ public class Content_course extends AppCompatActivity {
                                 readDataMean(new FirebaseCallbackMean() {
                                     @Override
                                     public void onCallBack(List<String> list) {
-                                        if (list.size() - 1 > demm)
+                                        if (list.size()  > demm)
                                         {
                                             demm++;
+                                        }
+                                        if (list.size() == demi)
+                                        {
+                                            demm = 0;
                                         }
                                     }
                                 });
@@ -1601,7 +1628,7 @@ public class Content_course extends AppCompatActivity {
 
 
                 });
-                Equal();
+                Equal(currentDate+1000000,2);
                 onClickconsider(font_layout,back_layout);
             }
 
@@ -1847,9 +1874,13 @@ public class Content_course extends AppCompatActivity {
                                 readDataMean(new FirebaseCallbackMean() {
                                     @Override
                                     public void onCallBack(List<String> list) {
-                                        if (list.size() - 1 > demm)
+                                        if (list.size()  > demm)
                                         {
                                             demm++;
+                                        }
+                                        if (list.size() == demi)
+                                        {
+                                            demm = 0;
                                         }
                                     }
                                 });
@@ -1867,7 +1898,7 @@ public class Content_course extends AppCompatActivity {
 
 
                 });
-                Equal();
+                Equal(currentDate+1000000000,3);
                 onClickDo_remember_but_long(font_layout,back_layout);
             }
 
@@ -1894,9 +1925,13 @@ public class Content_course extends AppCompatActivity {
                         readDataMean(new FirebaseCallbackMean() {
                             @Override
                             public void onCallBack(List<String> list) {
-                                if (list.size() - 1 > demm)
+                                if (list.size()  > demm)
                                 {
                                     demm++;
+                                }
+                                if (list.size() == demi)
+                                {
+                                    demm = 0;
                                 }
                             }
                         });
@@ -1926,7 +1961,7 @@ public class Content_course extends AppCompatActivity {
 
     }
 
-    private void Equal() {
+    private void  Equal(long a,int quality) {
 
 
         readDataWordImage(new FirebaseCallbackWord() {
@@ -1934,11 +1969,39 @@ public class Content_course extends AppCompatActivity {
             @Override
             public void onCallBackWord(List<String> listw) {
 
-                if (listw.size() - 1> demw) {
+//                easiness = (float) Math.max(1.3, easiness + 0.1 - (5.0 - quality) * (0.08 + (5.0 - quality) * 0.02));
+//
+//                // repetitions
+//                if (quality < 3) {
+//                    repetitions = 0;
+//                } else {
+//                    repetitions += 1;
+//                }
+//
+//                // interval
+//                if (repetitions <= 1) {
+//                    interval = 1;
+//                } else if (repetitions == 2) {
+//                    interval = 6;
+//                } else {
+//                    interval = Math.round(interval * easiness);
+//                }
+//
+//                // next practice
+//                int minisecondsInDay = 60 * 60 * 24*1000;
+//                long now = System.currentTimeMillis();
+//                long nextPracticeDate = currentDate + minisecondsInDay*interval;
+
+                if (listw.size() > demw) {
 
                     demw++;
 
                 }
+                if (listw.size()  == demw)
+                {
+                    demw = 0;
+                }
+
 
                 WordContent.setText(listw.get(demw));
 
@@ -1957,10 +2020,15 @@ public class Content_course extends AppCompatActivity {
             @Override
             public void onCallBackimage(List<String> listi) {
 
-                if (listi.size() - 1> demi) {
+                if (listi.size() > demi) {
 
                     demi++;
 
+                }
+
+                if (listi.size()  == demi)
+                {
+                    demi = 0;
                 }
                 Glide.with(Content_course.this).load(listi.get(demi)).into(image);
 
@@ -1973,8 +2041,10 @@ public class Content_course extends AppCompatActivity {
 
             }
 
+            @Override
+            public void onCallBackNote(List<Long> listNote) {
 
-
+            }
 
 
         });
@@ -2003,15 +2073,17 @@ public class Content_course extends AppCompatActivity {
 
                     final List<String> word = new ArrayList<>();
                     final List<String> image = new ArrayList<>();
+                    final List<Long> note = new ArrayList<>();
 
         FirebaseDatabase.getInstance().getReference().child("/users/"+getUid+"/course/"+key+"/Vocabulary/"+key+"learn").orderByChild("temporary_time").startAt(0).endAt(currentDate).addValueEventListener(new ValueEventListener() {
                         int  i ;
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            word.clear();
+                            image.clear();
                             if (snapshot.getChildrenCount()>0) {
                                 try {
-                                    GenericTypeIndicator<List<Vocabulary2>> t = new GenericTypeIndicator<List<Vocabulary2>>() {
-                                    };
+                                    GenericTypeIndicator<List<Vocabulary2>> t = new GenericTypeIndicator<List<Vocabulary2>>() {};
                                     List<Vocabulary2> messages = snapshot.getValue(t);
                                     int tam = messages.size();
                                     System.out.println(tam);
@@ -2019,10 +2091,11 @@ public class Content_course extends AppCompatActivity {
                                         assert messages != null;
                                         image.add(messages.get(i).getImage());
                                         word.add(messages.get(i).getWord());
-
+                                        note.add(messages.get(i).getNote());
                                     }
                                     firebaseCallback.onCallBackWord(word);
                                     firebaseCallback.onCallBackimage(image);
+                                    firebaseCallback.onCallBackNote(note);
                                 } catch (Exception e) {
                                     System.out.println(e);
 
@@ -2094,6 +2167,7 @@ public class Content_course extends AppCompatActivity {
                         int  i ;
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            mean.clear();
                             if (snapshot.getChildrenCount()>0  )
                             {
                                 try {
@@ -2169,6 +2243,7 @@ public class Content_course extends AppCompatActivity {
     private interface FirebaseCallbackWord {
         void onCallBackWord(List<String> listw);
         void onCallBackimage(List<String> listi);
+        void onCallBackNote(List<Long> listNote);
     }
 
 
@@ -2594,7 +2669,7 @@ public class Content_course extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         new AlertDialog.Builder(this)
-                .setMessage("Bạn có thực sự muốn thoát không?")
+                .setMessage("Bạn có thực sự muốn thoát không? \nNếu thoát bạn sẽ bị trừ 10 kinh nghiệm")
                 .setCancelable(false)
                 .setPositiveButton("Tôi muốn thoát", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
