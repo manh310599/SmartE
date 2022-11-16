@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/MANH/AndroidStudioProjects/Learn_english_smart/app/src/main/res/drawable/bg_blue_corner_16.xml" value="0.2645" />
+        <entry key="..\:/Users/MANH/AndroidStudioProjects/Learn_english_smart/app/src/main/res/drawable/bg_blue_corner_16_top_left_right.xml" value="0.2055" />
         <entry key="..\:/Users/MANH/AndroidStudioProjects/Learn_english_smart/app/src/main/res/drawable/card_font.xml" value="0.3335" />
         <entry key="..\:/Users/MANH/AndroidStudioProjects/Learn_english_smart/app/src/main/res/drawable/circle.xml" value="0.3335" />
         <entry key="..\:/Users/MANH/AndroidStudioProjects/Learn_english_smart/app/src/main/res/drawable/ic_audio.xml" value="0.1235" />
@@ -21,6 +22,7 @@
         <entry key="..\:/Users/MANH/AndroidStudioProjects/Learn_english_smart/app/src/main/res/layout/card_front.xml" value="0.24547101449275363" />
         <entry key="..\:/Users/MANH/AndroidStudioProjects/Learn_english_smart/app/src/main/res/layout/definitions_list_items.xml" value="0.264" />
         <entry key="..\:/Users/MANH/AndroidStudioProjects/Learn_english_smart/app/src/main/res/layout/dialog_add_course.xml" value="0.259375" />
+        <entry key="..\:/Users/MANH/AndroidStudioProjects/Learn_english_smart/app/src/main/res/layout/dialog_add_vocabulary.xml" value="0.25" />
         <entry key="..\:/Users/MANH/AndroidStudioProjects/Learn_english_smart/app/src/main/res/layout/fragment_dashboard.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/MANH/AndroidStudioProjects/Learn_english_smart/app/src/main/res/layout/fragment_gifts.xml" value="0.3112391930835735" />
         <entry key="..\:/Users/MANH/AndroidStudioProjects/Learn_english_smart/app/src/main/res/layout/fragment_mail.xml" value="0.18802083333333333" />

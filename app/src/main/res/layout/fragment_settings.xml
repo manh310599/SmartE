@@ -22,6 +22,7 @@
                 android:layout_height="325dp"
                 android:background="@drawable/gradient"
                 android:orientation="vertical">
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -30,18 +31,10 @@
                         android:id="@+id/Avatar"
                         android:layout_width="140dp"
                         android:layout_height="140dp"
-                        android:layout_marginTop="21dp"
                         android:layout_centerInParent="true"
+                        android:layout_marginTop="21dp"
                         android:src="@drawable/no_avatar" />
 
-                    <ImageView
-                        android:layout_width="30sp"
-                        android:layout_height="30sp"
-                        android:layout_below="@id/Avatar"
-                        android:layout_marginLeft="-29dp"
-                        android:layout_marginTop="-32dp"
-                        android:layout_toRightOf="@id/Avatar"
-                        android:src="@drawable/edit" />
                 </RelativeLayout>
 
 
@@ -58,86 +51,6 @@
 
 
             </LinearLayout>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="300dp"
-                android:layout_height="100dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="275dp">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:weightSum="3">
-                    <LinearLayout
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Thuộc"
-                            android:textSize="18sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="999"
-                            android:textStyle="bold"
-                            android:textSize="20sp"
-                            android:paddingTop="10dp"
-                            android:textColor="@color/startblue"
-                            />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="match_parent">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="chưa thuộc"
-                            android:textSize="18sp"
-                            />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="999"
-                            android:textStyle="bold"
-                            android:textSize="20sp"
-                            android:paddingTop="10dp"
-                            android:textColor="@color/startblue"
-                            />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="match_parent">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Điểm danh"
-                            android:textSize="20sp"
-                            />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="999"
-                            android:textStyle="bold"
-                            android:textSize="20sp"
-                            android:paddingTop="10dp"
-                            android:textColor="@color/startblue"
-                            />
-                    </LinearLayout>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
 
         </RelativeLayout>
 
@@ -164,6 +77,7 @@
                     android:layout_gravity="center_vertical"
                     android:paddingLeft="20dp"
                     android:textStyle="bold" />
+
             </LinearLayout>
             <LinearLayout
                 android:layout_marginTop="25dp"

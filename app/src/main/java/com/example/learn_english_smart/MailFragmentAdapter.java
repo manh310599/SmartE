@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.example.learn_english_smart.Class.Vocabulary;
 import com.example.learn_english_smart.Class.Vocabulary2;
 import com.example.learn_english_smart.Class.Vocabulary3;
 import com.example.learn_english_smart.Class.course;
@@ -103,7 +104,7 @@ public class MailFragmentAdapter extends RecyclerView.Adapter<MailFragmentAdapte
 
                 String timestamp = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
 
-                String currentDateString = new SimpleDateFormat("yyyyMMddHHmmss").format(Calendar.getInstance().getTime());
+
                 long now = System.currentTimeMillis();
 
                 FirebaseDatabase.getInstance().getReference().child("/users/"+uid+"/course/"+course1.getType()+"/Vocabulary/"+course1.getType()+"learn/flag").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -140,8 +141,10 @@ public class MailFragmentAdapter extends RecyclerView.Adapter<MailFragmentAdapte
 
                                                         GenericTypeIndicator<List<Vocabulary2>> t = new GenericTypeIndicator<List<Vocabulary2>>() {};
                                                         List<Vocabulary2> messages = snapshot2.getValue(t);
+                                                        if (c>0){
+                                                            FirebaseDatabase.getInstance().getReference().child("/users/"+uid+"/course/"+course1.getType()+"/Vocabulary/"+course1.getType()+"learn/flag").setValue(timestamp);
+                                                        }
 
-                                                        FirebaseDatabase.getInstance().getReference().child("/users/"+uid+"/course/"+course1.getType()+"/Vocabulary/"+course1.getType()+"learn/flag").setValue(timestamp);
                                                         DatabaseReference database1=  FirebaseDatabase.getInstance().getReference().child("/users/"+uid+"/course/"+course1.getType()+"/Vocabulary/"+course1.getType()+"learn");
                                                         database1.addListenerForSingleValueEvent(new ValueEventListener() {
                                                             @Override
@@ -189,37 +192,60 @@ public class MailFragmentAdapter extends RecyclerView.Adapter<MailFragmentAdapte
 
                                     }
                                     else {
-                                        Query database  = FirebaseDatabase.getInstance().getReference().child("/users/"+uid+"/course/"+course1.getType()+"/Vocabulary/"+course1.getType()).orderByChild("note").startAt(0).endAt(19);
-
-                                        database.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        DatabaseReference count = FirebaseDatabase.getInstance().getReference().child("/users/"+uid+"/course/"+course1.getType()+"/Vocabulary/"+course1.getType()+"learn");
+                                        count.addListenerForSingleValueEvent(new ValueEventListener() {
                                             @Override
                                             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                long c = snapshot.getChildrenCount();
 
-
-                                                GenericTypeIndicator<List<Vocabulary3>> t = new GenericTypeIndicator<List<Vocabulary3>>() {};
-                                                List<Vocabulary3> messages = snapshot.getValue(t);
-
-                                                FirebaseDatabase.getInstance().getReference().child("/users/"+uid+"/course/"+course1.getType()+"/Vocabulary/"+course1.getType()+"learn/flag").setValue(timestamp);
-                                                DatabaseReference database1=  FirebaseDatabase.getInstance().getReference().child("/users/"+uid+"/course/"+course1.getType()+"/Vocabulary/"+course1.getType()+"learn");
-                                                database1.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                Query database  = FirebaseDatabase.getInstance().getReference().child("/users/"+uid+"/course/"+course1.getType()+"/Vocabulary/"+course1.getType()).orderByChild("note").startAt(0) ;
+                                                database.endAt(19);
+                                                database.addListenerForSingleValueEvent(new ValueEventListener() {
                                                     @Override
-                                                    public void onDataChange(@NonNull DataSnapshot snapshot1) {
-                                                        long a = snapshot1.getChildrenCount();
-                                                        for (int i = 0; i<=19; i++)
+                                                    public void onDataChange(@NonNull DataSnapshot snapshot2) {
+
+                                                        GenericTypeIndicator<List<Vocabulary2>> t = new GenericTypeIndicator<List<Vocabulary2>>() {};
+                                                        List<Vocabulary2> messages = snapshot2.getValue(t);
+                                                        if (snapshot2.getChildrenCount()>0)
                                                         {
-
-                                                            Vocabulary2 vocabulary2 = new Vocabulary2(messages.get(i).getWord(),messages.get(i).getImage(),messages.get(i).getMeans(),now,2.5F,i,0,1 );
-
-
-                                                            database1.child(String.valueOf(i)).setValue(vocabulary2);
-
-
-
+                                                            FirebaseDatabase.getInstance().getReference().child("/users/"+uid+"/course/"+course1.getType()+"/Vocabulary/"+course1.getType()+"learn/flag").setValue(timestamp);
                                                         }
-                                                        System.out.println(course1.getType());
-                                                        Intent intent = new Intent(context,Content_course.class);
-                                                        intent.putExtra("key1",course1.getType());
-                                                        context.startActivity(intent);
+
+                                                        DatabaseReference database1=  FirebaseDatabase.getInstance().getReference().child("/users/"+uid+"/course/"+course1.getType()+"/Vocabulary/"+course1.getType()+"learn");
+                                                        database1.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                            @Override
+                                                            public void onDataChange(@NonNull DataSnapshot snapshot1) {
+
+                                                                for (int i = (int) c; i<=c+19; i++)
+                                                                {
+                                                                    try
+                                                                    {
+                                                                        Vocabulary2 vocabulary2 = new Vocabulary2(messages.get(i).getWord(),messages.get(i).getImage(),messages.get(i).getMeans(),now,messages.get(i).getEf(),messages.get(i).getNote(),0,1);
+
+
+                                                                        database1.child(String.valueOf(i)).setValue(vocabulary2);
+                                                                    }
+                                                                    catch (Exception e)
+                                                                    {
+
+                                                                    }
+
+
+
+                                                                }
+                                                                System.out.println(course1.getType());
+                                                                Intent intent = new Intent(context,Content_course.class);
+                                                                intent.putExtra("key1",course1.getType());
+                                                                context.startActivity(intent);
+
+                                                            }
+
+                                                            @Override
+                                                            public void onCancelled(@NonNull DatabaseError error) {
+
+                                                            }
+                                                        });
+//
 
                                                     }
 
@@ -228,8 +254,6 @@ public class MailFragmentAdapter extends RecyclerView.Adapter<MailFragmentAdapte
 
                                                     }
                                                 });
-//
-
                                             }
 
                                             @Override

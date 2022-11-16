@@ -19,7 +19,7 @@
         android:layout_height="match_parent"
         android:scaleType="fitXY"
         android:visibility="gone"
-        android:src="@drawable/emty2" />
+        android:src="@drawable/emty3" />
 
 
 
@@ -98,7 +98,7 @@
 
 
     <TextView
-        android:id="@+id/content_text"
+            android:id="@+id/content_text"
         style="@style/Base.TextAppearance.AppCompat.Display1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

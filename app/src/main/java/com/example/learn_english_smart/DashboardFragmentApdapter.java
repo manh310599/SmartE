@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.example.learn_english_smart.Class.Vocabulary;
 import com.example.learn_english_smart.Class.Vocabulary2;
 import com.example.learn_english_smart.Class.Vocabulary3;
 import com.example.learn_english_smart.Class.course;
@@ -103,24 +104,29 @@ public class DashboardFragmentApdapter extends RecyclerView.Adapter<DashboardFra
                         if (dataSnapshot.exists())
                         {
                             Toast.makeText(context, "Bạn đã đăng kí kháo học này rồi", Toast.LENGTH_SHORT).show();
+
                         }
                         else {
+                            List<Vocabulary> g = new ArrayList<>();
                         DatabaseReference data =  FirebaseDatabase.getInstance().getReference().child("/course/3000_vocabulary/Vocabulary/3000_Vocabulary");
                         data.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot1) {
-                                        long a = dataSnapshot1.getChildrenCount();
 
-                                    GenericTypeIndicator<List<Vocabulary3>> t = new GenericTypeIndicator<List<Vocabulary3>>() {};
-                                    List<Vocabulary3> messages = dataSnapshot1.getValue(t);
+                                    long a = dataSnapshot1.getChildrenCount();
 
-                                        for (int i = 0;i<a;i++)
+                                        for (DataSnapshot dataSnapshot2: dataSnapshot1.getChildren())
                                         {
-                                            Vocabulary3 vocabulary3 = new Vocabulary3(messages.get(i).getWord(),messages.get(i).getImage(),messages.get(i).getMeans(),0,2.5F,i);
-                                            FirebaseDatabase.getInstance().getReference("/users/"+uid+"/course/3000_vocabulary/Vocabulary/3000_vocabulary").child(String.valueOf(i)).setValue(vocabulary3);
+                                            Vocabulary vocabulary = dataSnapshot2.getValue(Vocabulary.class);
+                                            g.add(vocabulary);
                                         }
+                                        for (int  i = 0;i<a;i++) {
+                                            Vocabulary3 vocabulary3 = new Vocabulary3(g.get(i).getWord(),g.get(i).getImage(),g.get(i).getMeans(),1,2.5F,i);
 
-
+                                            FirebaseDatabase.getInstance().getReference("/users/" + uid + "/course/3000_vocabulary/Vocabulary/3000_vocabulary").child(String.valueOf(i)).setValue(vocabulary3);
+                                        }
+                                    FirebaseDatabase.getInstance().getReference().child("/users/" + uid + "/course/3000_vocabulary/"+"image_course").setValue("https://basicenglishspeaking.com/wp-content/uploads/2020/03/oxford-3000-most-common-words-in-English.jpg");
+                                    FirebaseDatabase.getInstance().getReference().child("/users/" + uid + "/course/3000_vocabulary/"+"type").setValue("3000_vocabulary");
                                 }
 
                                 @Override

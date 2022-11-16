@@ -214,7 +214,7 @@ public class MailFragment extends Fragment {
                             @Override
                             public void onClick(View view) {
 
-                                FirebaseDatabase.getInstance().getReference().child("/users/"+uid+"/course/"+query+"/Vocabulary/"+query).setValue("Hello");
+
                                 FirebaseDatabase.getInstance().getReference().child("/users/"+uid+"/course/"+query+"/image_course").setValue(a);
                                 FirebaseDatabase.getInstance().getReference().child("/users/"+uid+"/course/"+query+"/type").setValue(query);
                                 System.out.println("Tạo khóa học thành công");

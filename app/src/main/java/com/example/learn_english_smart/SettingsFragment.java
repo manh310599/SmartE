@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -40,7 +41,7 @@ public class SettingsFragment extends Fragment {
     Context context;
     FirebaseAuth mAuth;
 
-    TextView name1,gmail;
+    TextView name,gmail;
     Button siguot;
     CircleImageView image;
 
@@ -54,7 +55,7 @@ public class SettingsFragment extends Fragment {
                              ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
-        name1 = view.findViewById(R.id.Name);
+        name = view.findViewById(R.id.Name);
         gmail = view.findViewById(R.id.gmail);
         siguot = view.findViewById(R.id.sigout);
         image = view.findViewById(R.id.Avatar);
@@ -72,14 +73,11 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user1 = dataSnapshot.getValue(User.class);
-                if (user1!=null) {
-                name1.setText(user1.username);
-                gmail.setText(user1.email);
-                Picasso.get().load(user1.image).into(image);}
-                else {
-                    name1.setText(user.getDisplayName());
-                    Picasso.get().load(user.getPhotoUrl()).into(image);
-                }
+
+                    name.setText(user1.username);
+                        gmail.setText(user1.email);
+                Glide.with(getActivity()).load(user1.image).into(image);
+
 
             }
 

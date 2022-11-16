@@ -1,5 +1,7 @@
 package com.example.learn_english_smart.Course;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,15 +9,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 
+import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.View;
 
+import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -28,6 +35,8 @@ import com.example.learn_english_smart.Class.Vocabulary2;
 import com.example.learn_english_smart.Class.Vocabulary3;
 import com.example.learn_english_smart.Lottie_BottomBar;
 import com.example.learn_english_smart.R;
+import com.example.learn_english_smart.SearchImage.API_Image;
+import com.example.learn_english_smart.SearchImage.GetImage;
 import com.google.android.gms.common.util.JsonUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -40,6 +49,7 @@ import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.lib.customedittext.CustomEditText;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -51,6 +61,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
+import java.util.concurrent.ThreadLocalRandom;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class Content_course extends AppCompatActivity {
@@ -69,16 +84,16 @@ public class Content_course extends AppCompatActivity {
     private CustomEditText answer;
     View font_layout,back_layout;
     private RelativeLayout information;
-
+    boolean exit = false;
     String key;
     @SuppressLint("SimpleDateFormat")
 
     long now = System.currentTimeMillis();
 
-    @SuppressLint("SimpleDateFormat")
 
 
-    int demNote = -1;
+
+    int demNote = 0;
     int demi = 0;
     int demw = 0;
     int demm = 0;
@@ -108,7 +123,7 @@ public class Content_course extends AppCompatActivity {
 
         ///////////////////////get dữ liệu từ bên adapter////////////////////////
 
-
+        System.out.println(key);
 ///////////////////////////////////////////////////////////////////////////////
 
         DatabaseReference user = FirebaseDatabase.getInstance().getReference("users");
@@ -289,265 +304,8 @@ public class Content_course extends AppCompatActivity {
             public void onClick(View view) {
 
 
-                repeat.setText("Lập lại sau 1p");
-                ///////////////////////////////Khi click vào thay đổi thông tin hình ảnh và từ vựng////////////////////
-
-                inputText.setText(answer.getText());
-
-                Boolean found1;
-                Boolean found2;
-                Boolean found3;
-                Boolean found4;
-                Boolean found5;
-                Boolean found6;
-                Boolean found7;
-                Boolean found8;
-                Boolean found9;
-                Boolean found10;
-                Boolean found11;
-                Boolean found12;
-
-                eq = answer.getText().toString().trim().toUpperCase(Locale.ROOT);
-
-                found10 = eq.contains(muoi);
-                if (found10 == true)
-                {
-                    eq = eq.replace("10","mười");
-
-                }
-                found11 = eq.contains(MuoiMot);
-                if (found11 == true)
-                {
-                    eq = eq.replace("11","mười một");
-
-                }
-                found12 = eq.contains(MuoiHai);
-                if (found12 == true)
-                {
-                    eq = eq.replace("12","mười hai");
-
-                }
-
-                found1 = eq.contains(mot);
-                if (found1 == true)
-                {
-                    eq = eq.replace("1","một");
-
-                }
-
-                found2 = eq.contains(hai);
-                if (found2 == true)
-                {
-                    eq = eq.replace("2","hai");
-
-                }
-                found3 = eq.contains(ba);
-                if (found3 == true)
-                {
-                    eq = eq.replace("3","ba");
-
-                }
-                found4 = eq.contains(bon);
-                if (found4 == true)
-                {
-                    eq = eq.replace("4","tư");
-
-                }
-                found5 = eq.contains(nam);
-                if (found5 == true)
-                {
-                    eq = eq.replace("5","năm");
-
-                }
-                found6 = eq.contains(sau);
-                if (found6 == true)
-                {
-                    eq = eq.replace("6","sáu");
-
-                }
-                found7 = eq.contains(bay);
-                if (found7 == true)
-                {
-                    eq = eq.replace("7","bảy");
-
-                }
-                found8 = eq.contains(tam);
-                if (found8 == true)
-                {
-                    eq = eq.replace("8","tám");
-
-                }
-                found9 = eq.contains(chin);
-                if (found9 == true)
-                {
-                    eq = eq.replace("9","chín");
-
-                }
-
-                eq = eq.toUpperCase(Locale.ROOT);
-
-                readDataMean(new FirebaseCallbackMean() {
-
-                    @Override
-                    public void onCallBack(List<String> list) {
-
-                        temp.setText(list.get(demm));
-
-
-                        boolean found1;
-                        boolean found2;
-                        boolean found3;
-                        boolean found4;
-                        boolean found5;
-                        boolean found6;
-                        boolean found7;
-                        boolean found8;
-                        boolean found9;
-                        boolean found10;
-                        boolean found11;
-                        boolean found12;
-
-                        String getMean =     WordContent.getText().toString();
-                        aw = temp.getText().toString().trim().toUpperCase(Locale.ROOT);
-
-                        found10 = aw.contains(muoi);
-                        if (found10 == true)
-                        {
-                            aw = aw.replace("10","mười");
-
-                        }
-                        found11 = aw.contains(MuoiMot);
-                        if (found11 == true)
-                        {
-                            aw = aw.replace("11","mười một");
-
-                        }
-                        found12 = aw.contains(MuoiHai);
-                        if (found12 == true)
-                        {
-                            aw = aw.replace("12","mười hai");
-
-                        }
-
-                        found1 = aw.contains(mot);
-                        if (found1 == true)
-                        {
-                            aw = aw.replace("1","một");
-
-                        }
-
-                        found2 = aw.contains(hai);
-                        if (found2 == true)
-                        {
-                            aw = aw.replace("2","hai");
-
-                        }
-                        found3 = aw.contains(ba);
-                        if (found3 == true)
-                        {
-                            aw = aw.replace("3","ba");
-
-                        }
-                        found4 = aw.contains(bon);
-                        if (found4 == true)
-                        {
-                            aw = aw.replace("4","tư");
-
-                        }
-                        found5 = aw.contains(nam);
-                        if (found5 == true)
-                        {
-                            aw = aw.replace("5","năm");
-
-                        }
-                        found6 = aw.contains(sau);
-                        if (found6 == true)
-                        {
-                            aw = aw.replace("6","sáu");
-
-                        }
-                        found7 = aw.contains(bay);
-                        if (found7 == true)
-                        {
-                            aw = aw.replace("7","bảy");
-
-                        }
-                        found8 = aw.contains(tam);
-                        if (found8 == true)
-                        {
-                            aw = aw.replace("8","tám");
-
-                        }
-                        found9 = aw.contains(chin);
-                        if (found9 == true)
-                        {
-                            aw = aw.replace("9","chín");
-
-                        }
-
-                        aw = aw.toUpperCase(Locale.ROOT);
-
-
-                        if (eq.equals(aw))
-                        {
-                            check.setText("Đáp của bạn đã đúng");
-                            check.setTextColor(getResources().getColor(R.color.dot_dark_screen2));
-                        }
-                        else {
-                            check.setText("Đáp án bạn chọn đã sai");
-                            check.setTextColor(getResources().getColor(R.color.dot_dark_screen1));
-                        }
-
-                        ///////////////////////////////chỉnh sửa từ vựng để chuẩn bị đưa vào đường link đọc file âm thanh///////////////////////////////////
-                        getMean = getMean.replace(" ","%20");
-
-                        String text = "https://translate.google.com/translate_tts?ie=UTF-8&q="+getMean+"&tl=en&total=1&idx=0&textlen=12&tk=372388.179982&client=t";
-
-                        MediaPlayer mediaPlayer = new MediaPlayer();
-                        try {
-                            mediaPlayer.setDataSource(text);
-                            mediaPlayer.prepare();
-                            mediaPlayer.start();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        agree.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                ok(font_layout,back_layout);
-
-
-
-                                temp.setText(list.get(demm));
-
-                                readDataMean(new FirebaseCallbackMean() {
-                                    @Override
-                                    public void onCallBack(List<String> list) {
-                                        if (list.size()  > demm)
-                                        {
-                                            demm++;
-                                        }
-                                        if (list.size() == demi)
-                                        {
-                                            demm = 0;
-                                        }
-                                    }
-                                });
-
-                                answer.setText("");
-                            }
-
-                        });
-
-
-
-
-                    }
-
-
-                });
-                long time_count = 100000;
                 Equal(0);
+
                 onClickabsolutely_not(font_layout,back_layout);
             }
 
@@ -555,6 +313,12 @@ public class Content_course extends AppCompatActivity {
 
         });
 
+        Notdata.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                add_Vocabulary();
+            }
+        });
 
         hard_to_remember.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -564,261 +328,8 @@ public class Content_course extends AppCompatActivity {
 
                 ///////////////////////////////Khi click vào thay đổi thông tin hình ảnh và từ vựng////////////////////
 
-                repeat.setText("Lập lại sau 6 phút");
-                inputText.setText(answer.getText());
-
-                Boolean found1;
-                Boolean found2;
-                Boolean found3;
-                Boolean found4;
-                Boolean found5;
-                Boolean found6;
-                Boolean found7;
-                Boolean found8;
-                Boolean found9;
-                Boolean found10;
-                Boolean found11;
-                Boolean found12;
-
-                eq = answer.getText().toString().trim().toUpperCase(Locale.ROOT);
-
-                found10 = eq.contains(muoi);
-                if (found10 == true)
-                {
-                    eq = eq.replace("10","mười");
-
-                }
-                found11 = eq.contains(MuoiMot);
-                if (found11 == true)
-                {
-                    eq = eq.replace("11","mười một");
-
-                }
-                found12 = eq.contains(MuoiHai);
-                if (found12 == true)
-                {
-                    eq = eq.replace("12","mười hai");
-
-                }
-
-                found1 = eq.contains(mot);
-                if (found1 == true)
-                {
-                    eq = eq.replace("1","một");
-
-                }
-
-                found2 = eq.contains(hai);
-                if (found2 == true)
-                {
-                    eq = eq.replace("2","hai");
-
-                }
-                found3 = eq.contains(ba);
-                if (found3 == true)
-                {
-                    eq = eq.replace("3","ba");
-
-                }
-                found4 = eq.contains(bon);
-                if (found4 == true)
-                {
-                    eq = eq.replace("4","tư");
-
-                }
-                found5 = eq.contains(nam);
-                if (found5 == true)
-                {
-                    eq = eq.replace("5","năm");
-
-                }
-                found6 = eq.contains(sau);
-                if (found6 == true)
-                {
-                    eq = eq.replace("6","sáu");
-
-                }
-                found7 = eq.contains(bay);
-                if (found7 == true)
-                {
-                    eq = eq.replace("7","bảy");
-
-                }
-                found8 = eq.contains(tam);
-                if (found8 == true)
-                {
-                    eq = eq.replace("8","tám");
-
-                }
-                found9 = eq.contains(chin);
-                if (found9 == true)
-                {
-                    eq = eq.replace("9","chín");
-
-                }
-
-                eq = eq.toUpperCase(Locale.ROOT);
-
-                readDataMean(new FirebaseCallbackMean() {
-
-                    @Override
-                    public void onCallBack(List<String> list) {
-
-                        temp.setText(list.get(demm));
-
-                        boolean found1;
-                        boolean found2;
-                        boolean found3;
-                        boolean found4;
-                        boolean found5;
-                        boolean found6;
-                        boolean found7;
-                        boolean found8;
-                        boolean found9;
-                        boolean found10;
-                        boolean found11;
-                        boolean found12;
-
-                        String getMean = WordContent.getText().toString();
-                        aw = temp.getText().toString().trim().toUpperCase(Locale.ROOT);
-
-                        found10 = aw.contains(muoi);
-                        if (found10 == true)
-                        {
-                            aw = aw.replace("10","mười");
-
-                        }
-                        found11 = aw.contains(MuoiMot);
-                        if (found11 == true)
-                        {
-                            aw = aw.replace("11","mười một");
-
-                        }
-                        found12 = aw.contains(MuoiHai);
-                        if (found12 == true)
-                        {
-                            aw = aw.replace("12","mười hai");
-
-                        }
-
-                        found1 = aw.contains(mot);
-                        if (found1 == true)
-                        {
-                            aw = aw.replace("1","một");
-
-                        }
-
-                        found2 = aw.contains(hai);
-                        if (found2 == true)
-                        {
-                            aw = aw.replace("2","hai");
-
-                        }
-                        found3 = aw.contains(ba);
-                        if (found3 == true)
-                        {
-                            aw = aw.replace("3","ba");
-
-                        }
-                        found4 = aw.contains(bon);
-                        if (found4 == true)
-                        {
-                            aw = aw.replace("4","tư");
-
-                        }
-                        found5 = aw.contains(nam);
-                        if (found5 == true)
-                        {
-                            aw = aw.replace("5","năm");
-
-                        }
-                        found6 = aw.contains(sau);
-                        if (found6 == true)
-                        {
-                            aw = aw.replace("6","sáu");
-
-                        }
-                        found7 = aw.contains(bay);
-                        if (found7 == true)
-                        {
-                            aw = aw.replace("7","bảy");
-
-                        }
-                        found8 = aw.contains(tam);
-                        if (found8 == true)
-                        {
-                            aw = aw.replace("8","tám");
-
-                        }
-                        found9 = aw.contains(chin);
-                        if (found9 == true)
-                        {
-                            aw = aw.replace("9","chín");
-
-                        }
-
-                        aw = aw.toUpperCase(Locale.ROOT);
 
 
-                        if (eq.equals(aw))
-                        {
-                            check.setText("Đáp của bạn đã đúng");
-                            check.setTextColor(getResources().getColor(R.color.dot_dark_screen2));
-                        }
-                        else {
-                            check.setText("Đáp án bạn chọn đã sai");
-                            check.setTextColor(getResources().getColor(R.color.dot_dark_screen1));
-                        }
-
-                        ///////////////////////////////chỉnh sửa từ vựng để chuẩn bị đưa vào đường link đọc file âm thanh///////////////////////////////////
-                        getMean = getMean.replace(" ","%20");
-
-                        String text = "https://translate.google.com/translate_tts?ie=UTF-8&q="+getMean+"&tl=en&total=1&idx=0&textlen=12&tk=372388.179982&client=t";
-
-                        MediaPlayer mediaPlayer = new MediaPlayer();
-                        try {
-                            mediaPlayer.setDataSource(text);
-                            mediaPlayer.prepare();
-                            mediaPlayer.start();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-
-                        }
-                        agree.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                ok(font_layout,back_layout);
-
-
-
-                                temp.setText(list.get(demm));
-                                readDataMean(new FirebaseCallbackMean() {
-                                    @Override
-                                    public void onCallBack(List<String> list) {
-                                        if (list.size()  > demm)
-                                        {
-                                            demm++;
-                                        }
-                                        if (list.size() == demm)
-                                        {
-                                            demm = 0;
-                                        }
-                                    }
-                                });
-
-                                answer.setText("");
-                            }
-
-                        });
-
-
-
-
-                    }
-
-
-                });
-                int time_count = 600000;
                 Equal(1);
                 onClickUpHardtoremember(font_layout,back_layout);
             }
@@ -834,264 +345,7 @@ public class Content_course extends AppCompatActivity {
 
 
 
-                ///////////////////////////////Khi click vào thay đổi thông tin hình ảnh và từ vựng////////////////////
-                inputText.setText(answer.getText());
-                repeat.setText("Lập lại sau 3 ngày");
 
-
-                Boolean found1;
-                Boolean found2;
-                Boolean found3;
-                Boolean found4;
-                Boolean found5;
-                Boolean found6;
-                Boolean found7;
-                Boolean found8;
-                Boolean found9;
-                Boolean found10;
-                Boolean found11;
-                Boolean found12;
-
-                eq = answer.getText().toString().trim().toUpperCase(Locale.ROOT);
-
-                found10 = eq.contains(muoi);
-                if (found10 == true)
-                {
-                    eq = eq.replace("10","mười");
-
-                }
-                found11 = eq.contains(MuoiMot);
-                if (found11 == true)
-                {
-                    eq = eq.replace("11","mười một");
-
-                }
-                found12 = eq.contains(MuoiHai);
-                if (found12 == true)
-                {
-                    eq = eq.replace("12","mười hai");
-
-                }
-
-                found1 = eq.contains(mot);
-                if (found1 == true)
-                {
-                    eq = eq.replace("1","một");
-
-                }
-
-                found2 = eq.contains(hai);
-                if (found2 == true)
-                {
-                    eq = eq.replace("2","hai");
-
-                }
-                found3 = eq.contains(ba);
-                if (found3 == true)
-                {
-                    eq = eq.replace("3","ba");
-
-                }
-                found4 = eq.contains(bon);
-                if (found4 == true)
-                {
-                    eq = eq.replace("4","tư");
-
-                }
-                found5 = eq.contains(nam);
-                if (found5 == true)
-                {
-                    eq = eq.replace("5","năm");
-
-                }
-                found6 = eq.contains(sau);
-                if (found6 == true)
-                {
-                    eq = eq.replace("6","sáu");
-
-                }
-                found7 = eq.contains(bay);
-                if (found7 == true)
-                {
-                    eq = eq.replace("7","bảy");
-
-                }
-                found8 = eq.contains(tam);
-                if (found8 == true)
-                {
-                    eq = eq.replace("8","tám");
-
-                }
-                found9 = eq.contains(chin);
-                if (found9 == true)
-                {
-                    eq = eq.replace("9","chín");
-
-                }
-
-                eq = eq.toUpperCase(Locale.ROOT);
-
-                readDataMean(new FirebaseCallbackMean() {
-
-                    @Override
-                    public void onCallBack(List<String> list) {
-
-                        temp.setText(list.get(demm));
-
-                        boolean found1;
-                        boolean found2;
-                        boolean found3;
-                        boolean found4;
-                        boolean found5;
-                        boolean found6;
-                        boolean found7;
-                        boolean found8;
-                        boolean found9;
-                        boolean found10;
-                        boolean found11;
-                        boolean found12;
-
-                        String getMean = WordContent.getText().toString();
-                        aw = temp.getText().toString().trim().toUpperCase(Locale.ROOT);
-
-                        found10 = aw.contains(muoi);
-                        if (found10 == true)
-                        {
-                            aw = aw.replace("10","mười");
-
-                        }
-                        found11 = aw.contains(MuoiMot);
-                        if (found11 == true)
-                        {
-                            aw = aw.replace("11","mười một");
-
-                        }
-                        found12 = aw.contains(MuoiHai);
-                        if (found12 == true)
-                        {
-                            aw = aw.replace("12","mười hai");
-
-                        }
-
-                        found1 = aw.contains(mot);
-                        if (found1 == true)
-                        {
-                            aw = aw.replace("1","một");
-
-                        }
-
-                        found2 = aw.contains(hai);
-                        if (found2 == true)
-                        {
-                            aw = aw.replace("2","hai");
-
-                        }
-                        found3 = aw.contains(ba);
-                        if (found3 == true)
-                        {
-                            aw = aw.replace("3","ba");
-
-                        }
-                        found4 = aw.contains(bon);
-                        if (found4 == true)
-                        {
-                            aw = aw.replace("4","tư");
-
-                        }
-                        found5 = aw.contains(nam);
-                        if (found5 == true)
-                        {
-                            aw = aw.replace("5","năm");
-
-                        }
-                        found6 = aw.contains(sau);
-                        if (found6 == true)
-                        {
-                            aw = aw.replace("6","sáu");
-
-                        }
-                        found7 = aw.contains(bay);
-                        if (found7 == true)
-                        {
-                            aw = aw.replace("7","bảy");
-
-                        }
-                        found8 = aw.contains(tam);
-                        if (found8 == true)
-                        {
-                            aw = aw.replace("8","tám");
-
-                        }
-                        found9 = aw.contains(chin);
-                        if (found9 == true)
-                        {
-                            aw = aw.replace("9","chín");
-
-                        }
-
-                        aw = aw.toUpperCase(Locale.ROOT);
-
-
-                        if (eq.equals(aw))
-                        {
-                            check.setText("Đáp của bạn đã đúng");
-                            check.setTextColor(getResources().getColor(R.color.dot_dark_screen2));
-                        }
-                        else {
-                            check.setText("Đáp án bạn chọn đã sai");
-                            check.setTextColor(getResources().getColor(R.color.dot_dark_screen1));
-                        }
-
-                        ///////////////////////////////chỉnh sửa từ vựng để chuẩn bị đưa vào đường link đọc file âm thanh///////////////////////////////////
-                        getMean = getMean.replace(" ","%20");
-
-                        String text = "https://translate.google.com/translate_tts?ie=UTF-8&q="+getMean+"&tl=en&total=1&idx=0&textlen=12&tk=372388.179982&client=t";
-
-                        MediaPlayer mediaPlayer = new MediaPlayer();
-                        try {
-                            mediaPlayer.setDataSource(text);
-                            mediaPlayer.prepare();
-                            mediaPlayer.start();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-
-                        }
-                        agree.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                ok(font_layout,back_layout);
-
-
-
-                                temp.setText(list.get(demm));
-                                readDataMean(new FirebaseCallbackMean() {
-                                    @Override
-                                    public void onCallBack(List<String> list) {
-                                        if (list.size()  > demm)
-                                        {
-                                            demm++;
-                                        }
-                                        if (list.size() == demi)
-                                        {
-                                            demm = 0;
-                                        }
-                                    }
-                                });
-
-
-                                answer.setText("");
-                            }
-
-                        });
-
-
-
-
-                    }
-
-
-                });
-                int time_count = 1000000;
                 Equal(4);
                 onClickUpEasy(font_layout,back_layout);
             }
@@ -1104,266 +358,12 @@ public class Content_course extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                repeat.setText("Lập lại sau 6 ngày");
-                inputText.setText(answer.getText());
-                ///////////////////////////////Khi click vào thay đổi thông tin hình ảnh và từ vựng////////////////////
-
-
-
-                Boolean found1;
-                Boolean found2;
-                Boolean found3;
-                Boolean found4;
-                Boolean found5;
-                Boolean found6;
-                Boolean found7;
-                Boolean found8;
-                Boolean found9;
-                Boolean found10;
-                Boolean found11;
-                Boolean found12;
-
-                eq = answer.getText().toString().trim().toUpperCase(Locale.ROOT);
-
-                found10 = eq.contains(muoi);
-                if (found10 == true)
-                {
-                    eq = eq.replace("10","mười");
-
-                }
-                found11 = eq.contains(MuoiMot);
-                if (found11 == true)
-                {
-                    eq = eq.replace("11","mười một");
-
-                }
-                found12 = eq.contains(MuoiHai);
-                if (found12 == true)
-                {
-                    eq = eq.replace("12","mười hai");
-
-                }
-
-                found1 = eq.contains(mot);
-                if (found1 == true)
-                {
-                    eq = eq.replace("1","một");
-
-                }
-
-                found2 = eq.contains(hai);
-                if (found2 == true)
-                {
-                    eq = eq.replace("2","hai");
-
-                }
-                found3 = eq.contains(ba);
-                if (found3 == true)
-                {
-                    eq = eq.replace("3","ba");
-
-                }
-                found4 = eq.contains(bon);
-                if (found4 == true)
-                {
-                    eq = eq.replace("4","tư");
-
-                }
-                found5 = eq.contains(nam);
-                if (found5 == true)
-                {
-                    eq = eq.replace("5","năm");
-
-                }
-                found6 = eq.contains(sau);
-                if (found6 == true)
-                {
-                    eq = eq.replace("6","sáu");
-
-                }
-                found7 = eq.contains(bay);
-                if (found7 == true)
-                {
-                    eq = eq.replace("7","bảy");
-
-                }
-                found8 = eq.contains(tam);
-                if (found8 == true)
-                {
-                    eq = eq.replace("8","tám");
-
-                }
-                found9 = eq.contains(chin);
-                if (found9 == true)
-                {
-                    eq = eq.replace("9","chín");
-
-                }
-
-                eq = eq.toUpperCase(Locale.ROOT);
-
-                readDataMean(new FirebaseCallbackMean() {
-
-                    @Override
-                    public void onCallBack(List<String> list) {
-
-                        temp.setText(list.get(demm));
-
-                        boolean found1;
-                        boolean found2;
-                        boolean found3;
-                        boolean found4;
-                        boolean found5;
-                        boolean found6;
-                        boolean found7;
-                        boolean found8;
-                        boolean found9;
-                        boolean found10;
-                        boolean found11;
-                        boolean found12;
-
-                        String getMean = WordContent.getText().toString();
-                        aw = temp.getText().toString().trim().toUpperCase(Locale.ROOT);
-
-                        found10 = aw.contains(muoi);
-                        if (found10 == true)
-                        {
-                            aw = aw.replace("10","mười");
-
-                        }
-                        found11 = aw.contains(MuoiMot);
-                        if (found11 == true)
-                        {
-                            aw = aw.replace("11","mười một");
-
-                        }
-                        found12 = aw.contains(MuoiHai);
-                        if (found12 == true)
-                        {
-                            aw = aw.replace("12","mười hai");
-
-                        }
-
-                        found1 = aw.contains(mot);
-                        if (found1 == true)
-                        {
-                            aw = aw.replace("1","một");
-
-                        }
-
-                        found2 = aw.contains(hai);
-                        if (found2 == true)
-                        {
-                            aw = aw.replace("2","hai");
-
-                        }
-                        found3 = aw.contains(ba);
-                        if (found3 == true)
-                        {
-                            aw = aw.replace("3","ba");
-
-                        }
-                        found4 = aw.contains(bon);
-                        if (found4 == true)
-                        {
-                            aw = aw.replace("4","tư");
-
-                        }
-                        found5 = aw.contains(nam);
-                        if (found5 == true)
-                        {
-                            aw = aw.replace("5","năm");
-
-                        }
-                        found6 = aw.contains(sau);
-                        if (found6 == true)
-                        {
-                            aw = aw.replace("6","sáu");
-
-                        }
-                        found7 = aw.contains(bay);
-                        if (found7 == true)
-                        {
-                            aw = aw.replace("7","bảy");
-
-                        }
-                        found8 = aw.contains(tam);
-                        if (found8 == true)
-                        {
-                            aw = aw.replace("8","tám");
-
-                        }
-                        found9 = aw.contains(chin);
-                        if (found9 == true)
-                        {
-                            aw = aw.replace("9","chín");
-
-                        }
-
-                        aw = aw.toUpperCase(Locale.ROOT);
-
-
-                        if (eq.equals(aw))
-                        {
-                            check.setText("Đáp của bạn đã đúng");
-                            check.setTextColor(getResources().getColor(R.color.dot_dark_screen2));
-                        }
-                        else {
-                            check.setText("Đáp án bạn chọn đã sai");
-                            check.setTextColor(getResources().getColor(R.color.dot_dark_screen1));
-                        }
-
-                        ///////////////////////////////chỉnh sửa từ vựng để chuẩn bị đưa vào đường link đọc file âm thanh///////////////////////////////////
-                        getMean = getMean.replace(" ","%20");
-
-                        String text = "https://translate.google.com/translate_tts?ie=UTF-8&q="+getMean+"&tl=en&total=1&idx=0&textlen=12&tk=372388.179982&client=t";
-
-                        MediaPlayer mediaPlayer = new MediaPlayer();
-                        try {
-                            mediaPlayer.setDataSource(text);
-                            mediaPlayer.prepare();
-                            mediaPlayer.start();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-
-                        }
-                        agree.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                ok(font_layout,back_layout);
-
-
-
-                                temp.setText(list.get(demm));
-                                readDataMean(new FirebaseCallbackMean() {
-                                    @Override
-                                    public void onCallBack(List<String> list) {
-                                        if (list.size()  > demm)
-                                        {
-                                            demm++;
-                                        }
-                                        if (list.size() == demi)
-                                        {
-                                            demm = 0;
-                                        }
-                                    }
-                                });
-
-
-                                answer.setText("");
-                            }
-
-                        });
 
 
 
 
-                    }
-
-
-                });
                 Equal(5);
-                onClickUpperfect(font_layout,back_layout);
+                onClickUpEasy(font_layout,back_layout);
             }
 
 
@@ -1375,263 +375,7 @@ public class Content_course extends AppCompatActivity {
             public void onClick(View view) {
 
 
-                repeat.setText("Lập lại sau 10p");
-                ///////////////////////////////Khi click vào thay đổi thông tin hình ảnh và từ vựng////////////////////
-                inputText.setText(answer.getText());
 
-
-                Boolean found1;
-                Boolean found2;
-                Boolean found3;
-                Boolean found4;
-                Boolean found5;
-                Boolean found6;
-                Boolean found7;
-                Boolean found8;
-                Boolean found9;
-                Boolean found10;
-                Boolean found11;
-                Boolean found12;
-
-                eq = answer.getText().toString().trim().toUpperCase(Locale.ROOT);
-
-                found10 = eq.contains(muoi);
-                if (found10 == true)
-                {
-                    eq = eq.replace("10","mười");
-
-                }
-                found11 = eq.contains(MuoiMot);
-                if (found11 == true)
-                {
-                    eq = eq.replace("11","mười một");
-
-                }
-                found12 = eq.contains(MuoiHai);
-                if (found12 == true)
-                {
-                    eq = eq.replace("12","mười hai");
-
-                }
-
-                found1 = eq.contains(mot);
-                if (found1 == true)
-                {
-                    eq = eq.replace("1","một");
-
-                }
-
-                found2 = eq.contains(hai);
-                if (found2 == true)
-                {
-                    eq = eq.replace("2","hai");
-
-                }
-                found3 = eq.contains(ba);
-                if (found3 == true)
-                {
-                    eq = eq.replace("3","ba");
-
-                }
-                found4 = eq.contains(bon);
-                if (found4 == true)
-                {
-                    eq = eq.replace("4","tư");
-
-                }
-                found5 = eq.contains(nam);
-                if (found5 == true)
-                {
-                    eq = eq.replace("5","năm");
-
-                }
-                found6 = eq.contains(sau);
-                if (found6 == true)
-                {
-                    eq = eq.replace("6","sáu");
-
-                }
-                found7 = eq.contains(bay);
-                if (found7 == true)
-                {
-                    eq = eq.replace("7","bảy");
-
-                }
-                found8 = eq.contains(tam);
-                if (found8 == true)
-                {
-                    eq = eq.replace("8","tám");
-
-                }
-                found9 = eq.contains(chin);
-                if (found9 == true)
-                {
-                    eq = eq.replace("9","chín");
-
-                }
-
-                eq = eq.toUpperCase(Locale.ROOT);
-
-                readDataMean(new FirebaseCallbackMean() {
-
-                    @Override
-                    public void onCallBack(List<String> list) {
-
-                        temp.setText(list.get(demm));
-
-                        boolean found1;
-                        boolean found2;
-                        boolean found3;
-                        boolean found4;
-                        boolean found5;
-                        boolean found6;
-                        boolean found7;
-                        boolean found8;
-                        boolean found9;
-                        boolean found10;
-                        boolean found11;
-                        boolean found12;
-
-                        String getMean = WordContent.getText().toString();
-                        aw = temp.getText().toString().trim().toUpperCase(Locale.ROOT);
-
-                        found10 = aw.contains(muoi);
-                        if (found10 == true)
-                        {
-                            aw = aw.replace("10","mười");
-
-                        }
-                        found11 = aw.contains(MuoiMot);
-                        if (found11 == true)
-                        {
-                            aw = aw.replace("11","mười một");
-
-                        }
-                        found12 = aw.contains(MuoiHai);
-                        if (found12 == true)
-                        {
-                            aw = aw.replace("12","mười hai");
-
-                        }
-
-                        found1 = aw.contains(mot);
-                        if (found1 == true)
-                        {
-                            aw = aw.replace("1","một");
-
-                        }
-
-                        found2 = aw.contains(hai);
-                        if (found2 == true)
-                        {
-                            aw = aw.replace("2","hai");
-
-                        }
-                        found3 = aw.contains(ba);
-                        if (found3 == true)
-                        {
-                            aw = aw.replace("3","ba");
-
-                        }
-                        found4 = aw.contains(bon);
-                        if (found4 == true)
-                        {
-                            aw = aw.replace("4","tư");
-
-                        }
-                        found5 = aw.contains(nam);
-                        if (found5 == true)
-                        {
-                            aw = aw.replace("5","năm");
-
-                        }
-                        found6 = aw.contains(sau);
-                        if (found6 == true)
-                        {
-                            aw = aw.replace("6","sáu");
-
-                        }
-                        found7 = aw.contains(bay);
-                        if (found7 == true)
-                        {
-                            aw = aw.replace("7","bảy");
-
-                        }
-                        found8 = aw.contains(tam);
-                        if (found8 == true)
-                        {
-                            aw = aw.replace("8","tám");
-
-                        }
-                        found9 = aw.contains(chin);
-                        if (found9 == true)
-                        {
-                            aw = aw.replace("9","chín");
-
-                        }
-
-                        aw = aw.toUpperCase(Locale.ROOT);
-
-
-                        if (eq.equals(aw))
-                        {
-                            check.setText("Đáp của bạn đã đúng");
-                            check.setTextColor(getResources().getColor(R.color.dot_dark_screen2));
-                        }
-                        else {
-                            check.setText("Đáp án bạn chọn đã sai");
-                            check.setTextColor(getResources().getColor(R.color.dot_dark_screen1));
-                        }
-
-                        ///////////////////////////////chỉnh sửa từ vựng để chuẩn bị đưa vào đường link đọc file âm thanh///////////////////////////////////
-                        getMean = getMean.replace(" ","%20");
-
-                        String text = "https://translate.google.com/translate_tts?ie=UTF-8&q="+getMean+"&tl=en&total=1&idx=0&textlen=12&tk=372388.179982&client=t";
-
-                        MediaPlayer mediaPlayer = new MediaPlayer();
-                        try {
-                            mediaPlayer.setDataSource(text);
-                            mediaPlayer.prepare();
-                            mediaPlayer.start();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-
-                        }
-                        agree.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                ok(font_layout,back_layout);
-
-
-
-                                temp.setText(list.get(demm));
-                                readDataMean(new FirebaseCallbackMean() {
-                                    @Override
-                                    public void onCallBack(List<String> list) {
-                                        if (list.size()  > demm)
-                                        {
-                                            demm++;
-                                        }
-                                        if (list.size() == demi)
-                                        {
-                                            demm = 0;
-                                        }
-                                    }
-                                });
-
-
-                                answer.setText("");
-                            }
-
-                        });
-
-
-
-
-                    }
-
-
-                });
                 Equal(2);
                 onClickconsider(font_layout,back_layout);
             }
@@ -1644,264 +388,8 @@ public class Content_course extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                repeat.setText("Lập lai sau 1 ngày");
-                inputText.setText(answer.getText());
-                ///////////////////////////////Khi click vào thay đổi thông tin hình ảnh và từ vựng////////////////////
 
 
-
-                Boolean found1;
-                Boolean found2;
-                Boolean found3;
-                Boolean found4;
-                Boolean found5;
-                Boolean found6;
-                Boolean found7;
-                Boolean found8;
-                Boolean found9;
-                Boolean found10;
-                Boolean found11;
-                Boolean found12;
-
-                eq = answer.getText().toString().trim().toUpperCase(Locale.ROOT);
-
-                found10 = eq.contains(muoi);
-                if (found10 == true)
-                {
-                    eq = eq.replace("10","mười");
-
-                }
-                found11 = eq.contains(MuoiMot);
-                if (found11 == true)
-                {
-                    eq = eq.replace("11","mười một");
-
-                }
-                found12 = eq.contains(MuoiHai);
-                if (found12 == true)
-                {
-                    eq = eq.replace("12","mười hai");
-
-                }
-
-                found1 = eq.contains(mot);
-                if (found1 == true)
-                {
-                    eq = eq.replace("1","một");
-
-                }
-
-                found2 = eq.contains(hai);
-                if (found2 == true)
-                {
-                    eq = eq.replace("2","hai");
-
-                }
-                found3 = eq.contains(ba);
-                if (found3 == true)
-                {
-                    eq = eq.replace("3","ba");
-
-                }
-                found4 = eq.contains(bon);
-                if (found4 == true)
-                {
-                    eq = eq.replace("4","tư");
-
-                }
-                found5 = eq.contains(nam);
-                if (found5 == true)
-                {
-                    eq = eq.replace("5","năm");
-
-                }
-                found6 = eq.contains(sau);
-                if (found6 == true)
-                {
-                    eq = eq.replace("6","sáu");
-
-                }
-                found7 = eq.contains(bay);
-                if (found7 == true)
-                {
-                    eq = eq.replace("7","bảy");
-
-                }
-                found8 = eq.contains(tam);
-                if (found8 == true)
-                {
-                    eq = eq.replace("8","tám");
-
-                }
-                found9 = eq.contains(chin);
-                if (found9 == true)
-                {
-                    eq = eq.replace("9","chín");
-
-                }
-
-                eq = eq.toUpperCase(Locale.ROOT);
-
-                readDataMean(new FirebaseCallbackMean() {
-
-                    @Override
-                    public void onCallBack(List<String> list) {
-
-                        temp.setText(list.get(demm));
-
-                        boolean found1;
-                        boolean found2;
-                        boolean found3;
-                        boolean found4;
-                        boolean found5;
-                        boolean found6;
-                        boolean found7;
-                        boolean found8;
-                        boolean found9;
-                        boolean found10;
-                        boolean found11;
-                        boolean found12;
-
-                        String getMean = WordContent.getText().toString();
-                        aw = temp.getText().toString().trim().toUpperCase(Locale.ROOT);
-
-                        found10 = aw.contains(muoi);
-                        if (found10 == true)
-                        {
-                            aw = aw.replace("10","mười");
-
-                        }
-                        found11 = aw.contains(MuoiMot);
-                        if (found11 == true)
-                        {
-                            aw = aw.replace("11","mười một");
-
-                        }
-                        found12 = aw.contains(MuoiHai);
-                        if (found12 == true)
-                        {
-                            aw = aw.replace("12","mười hai");
-
-                        }
-
-                        found1 = aw.contains(mot);
-                        if (found1 == true)
-                        {
-                            aw = aw.replace("1","một");
-
-                        }
-
-                        found2 = aw.contains(hai);
-                        if (found2 == true)
-                        {
-                            aw = aw.replace("2","hai");
-
-                        }
-                        found3 = aw.contains(ba);
-                        if (found3 == true)
-                        {
-                            aw = aw.replace("3","ba");
-
-                        }
-                        found4 = aw.contains(bon);
-                        if (found4 == true)
-                        {
-                            aw = aw.replace("4","tư");
-
-                        }
-                        found5 = aw.contains(nam);
-                        if (found5 == true)
-                        {
-                            aw = aw.replace("5","năm");
-
-                        }
-                        found6 = aw.contains(sau);
-                        if (found6 == true)
-                        {
-                            aw = aw.replace("6","sáu");
-
-                        }
-                        found7 = aw.contains(bay);
-                        if (found7 == true)
-                        {
-                            aw = aw.replace("7","bảy");
-
-                        }
-                        found8 = aw.contains(tam);
-                        if (found8 == true)
-                        {
-                            aw = aw.replace("8","tám");
-
-                        }
-                        found9 = aw.contains(chin);
-                        if (found9 == true)
-                        {
-                            aw = aw.replace("9","chín");
-
-                        }
-
-                        aw = aw.toUpperCase(Locale.ROOT);
-
-
-                        if (eq.equals(aw))
-                        {
-                            check.setText("Đáp của bạn đã đúng");
-                            check.setTextColor(getResources().getColor(R.color.dot_dark_screen2));
-                        }
-                        else {
-                            check.setText("Đáp án bạn chọn đã sai");
-                            check.setTextColor(getResources().getColor(R.color.dot_dark_screen1));
-                        }
-
-                        ///////////////////////////////chỉnh sửa từ vựng để chuẩn bị đưa vào đường link đọc file âm thanh///////////////////////////////////
-                        getMean = getMean.replace(" ","%20");
-
-                        String text = "https://translate.google.com/translate_tts?ie=UTF-8&q="+getMean+"&tl=en&total=1&idx=0&textlen=12&tk=372388.179982&client=t";
-
-                        MediaPlayer mediaPlayer = new MediaPlayer();
-                        try {
-                            mediaPlayer.setDataSource(text);
-                            mediaPlayer.prepare();
-                            mediaPlayer.start();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-
-                        }
-                        agree.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                ok(font_layout,back_layout);
-
-
-
-                                temp.setText(list.get(demm));
-                                readDataMean(new FirebaseCallbackMean() {
-                                    @Override
-                                    public void onCallBack(List<String> list) {
-                                        if (list.size()  > demm)
-                                        {
-                                            demm++;
-                                        }
-                                        if (list.size() == demi)
-                                        {
-                                            demm = 0;
-                                        }
-                                    }
-                                });
-
-
-                                answer.setText("");
-                            }
-
-                        });
-
-
-
-
-                    }
-
-
-                });
                 Equal(3);
                 onClickDo_remember_but_long(font_layout,back_layout);
             }
@@ -1923,23 +411,6 @@ public class Content_course extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         ok(font_layout,back_layout);
-
-
-                        temp.setText(list.get(demm));
-                        readDataMean(new FirebaseCallbackMean() {
-                            @Override
-                            public void onCallBack(List<String> list) {
-                                if (list.size()  > demm)
-                                {
-                                    demm++;
-                                }
-                                if (list.size() == demi)
-                                {
-                                    demm = 0;
-                                }
-                            }
-                        });
-
 
                         answer.setText("");
                     }
@@ -1965,7 +436,96 @@ public class Content_course extends AppCompatActivity {
 
     }
 
-    private void  Equal(int quality) {
+    private void add_Vocabulary() {
+        Dialog alertDialog = new Dialog(this);
+        alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        alertDialog.setContentView(R.layout.dialog_add_vocabulary);
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+        CustomEditText word = alertDialog.findViewById(R.id.word);
+        ImageView imageView = alertDialog.findViewById(R.id.image);
+        Button Add_image = alertDialog.findViewById(R.id.add_image);
+        CustomEditText mean = alertDialog.findViewById(R.id.mean);
+        Button Add_Vocabulary = alertDialog.findViewById(R.id.add_vocabulary);
+
+        Add_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (word.getText().equals(""))
+                {
+                    Toast.makeText(Content_course.this, "Không được trống hãy điền vào từ vựng", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Add_Vocabulary.setVisibility(View.VISIBLE);
+                    UpImage(imageView,Add_Vocabulary,word.getText(),mean.getText(),alertDialog);
+                }
+            }
+        });
+        alertDialog.show();
+    }
+
+    private void UpImage(ImageView imageView, Button add_vocabulary, String word,String mean,Dialog dialog) {
+        API_Image.API_IMAGE.GET_IMAGE_CALL("30364055-ba526c17b5bca96e736c16990", word, "photo", true).enqueue(new Callback<GetImage>() {
+            @Override
+            public void onResponse(Call<GetImage> call, Response<GetImage> response) {
+                GetImage getImage = response.body();
+                if (getImage != null) {
+
+                    try {
+                        int random = ThreadLocalRandom.current().nextInt(0, 10);
+                        String s = getImage.getHits().get(random).getWebformatURL();
+
+                        Picasso.get().load(getImage.getHits().get(random).getWebformatURL()).into(imageView);
+
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        String uid = user.getUid();
+
+                        add_vocabulary.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+
+
+                                FirebaseDatabase.getInstance().getReference().child("/users/"+uid+"/course/"+key+"/Vocabulary/"+key).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        long a = snapshot.getChildrenCount();
+
+                                        Vocabulary3 vocabulary3 = new Vocabulary3(word,s,mean,0,2.5F,a);
+
+
+                                        FirebaseDatabase.getInstance().getReference().child("/users/"+uid+"/course/"+key+"/Vocabulary/"+key).child(String.valueOf(a)).setValue(vocabulary3);
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+
+
+                                Toast.makeText(Content_course.this, "Thêm từ: "+word+" thành công", Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
+                            }
+
+                        });
+
+                    } catch (Exception ex) {
+                        Toast.makeText(Content_course.this, "Không có hình ảnh này", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<GetImage> call, Throwable t) {
+                Log.d(TAG, "onFailure: ");
+            }
+        });
+    }
+
+
+    private void    Equal(int quality) {
 
 
         readDataWordImage(new FirebaseCallbackWord() {
@@ -1974,24 +534,6 @@ public class Content_course extends AppCompatActivity {
             public void onCallBackWord(List<String> listw) {
 
 
-               
-
-                if (listw.size() > demw) {
-
-                    demw++;
-
-                }
-                if (listw.size()  == demw)
-                {
-                    demw = 0;
-                }
-
-
-                WordContent.setText(listw.get(demw));
-
-
-                System.out.println(listw.size());
-                System.out.println(demw);
 
 
 
@@ -2004,17 +546,7 @@ public class Content_course extends AppCompatActivity {
             @Override
             public void onCallBackimage(List<String> listi) {
 
-                if (listi.size() > demi) {
-
-                    demi++;
-
-                }
-
-                if (listi.size()  == demi)
-                {
-                    demi = 0;
-                }
-                Glide.with(Content_course.this).load(listi.get(demi)).into(image);
+//
 
 
 
@@ -2027,105 +559,143 @@ public class Content_course extends AppCompatActivity {
 
 
 
-
-
             @Override
             public void onCallBackNote(List<Long> listNote) {
 
-                if (listNote.size() > demNote) {
+                long a = listNote.size();
 
-                    demNote++;
-
-                }
-
-                if (listNote.size()  == demNote)
-                {
-                    demNote = 0;
-                }
-                FirebaseUser users = FirebaseAuth.getInstance().getCurrentUser();
-                String getUid  = users.getUid();
-
-           FirebaseDatabase.getInstance().getReference().child("/users/"+getUid+"/course/"+key+"/Vocabulary/"+key+"learn").orderByChild("note").equalTo(listNote.get(demNote)).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for (DataSnapshot dataSnapshot: snapshot.getChildren())
-                        {
-                            Vocabulary2 vocabulary2 = dataSnapshot.getValue(Vocabulary2.class);
-
-                            Vocabulary2 vocabulary = new Vocabulary2();
-                            // retrieve the stored values (default values if new cards)
-                            long repetitions = vocabulary2.getRepetitions();
-                            float easiness = vocabulary2.getEf();
-                            long interval = vocabulary2.getInterval();
-
-                            // easiness factor
-                            easiness = (float) Math.max(1.3, easiness + 0.1 - (5.0 - quality) * (0.08 + (5.0 - quality) * 0.02));
-                            vocabulary.setEf(easiness);
-                            FirebaseDatabase.getInstance().getReference().child("/users/"+getUid+"/course/"+key+"/Vocabulary/"+key+"learn").child(String.valueOf(listNote.get(demNote))).updateChildren(vocabulary.toMap3());
+                List<Vocabulary2> g = new ArrayList<>();
+                List<String> word = new ArrayList<>();
+                List<String> image = new ArrayList<>();
+                List<String> mean = new ArrayList<>();
 
 
-                            // repetitions
-                            if (quality < 3) {
+                    FirebaseUser users = FirebaseAuth.getInstance().getCurrentUser();
+                    String getUid  = users.getUid();
 
-                                vocabulary.setRepetitions(0);
-                                FirebaseDatabase.getInstance().getReference().child("/users/"+getUid+"/course/"+key+"/Vocabulary/"+key+"learn").child(String.valueOf(listNote.get(demNote))).updateChildren(vocabulary.toMap());
+                    FirebaseDatabase.getInstance().getReference().child("/users/"+getUid+"/course/"+key+"/Vocabulary/"+key+"learn").orderByChild("temporary_time").startAt(0).endAt(now).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @SuppressLint("SetTextI18n")
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
+                                Vocabulary2 vocabulary2 = dataSnapshot.getValue(Vocabulary2.class);
+                                g.add(vocabulary2);
 
-
-                            } else {
-                                vocabulary.setRepetitions(vocabulary2.getRepetitions()+1);
-                                FirebaseDatabase.getInstance().getReference().child("/users/"+getUid+"/course/"+key+"/Vocabulary/"+key+"learn").child(String.valueOf(listNote.get(demNote))).updateChildren(vocabulary.toMap());
-
-                                if (repetitions <= 1) {
-                                    interval = 1;
-                                    vocabulary.setInterval(1);
-                                    FirebaseDatabase.getInstance().getReference().child("/users/"+getUid+"/course/"+key+"/Vocabulary/"+key+"learn").child(String.valueOf(listNote.get(demNote))).updateChildren(vocabulary.toMap1());
-
-                                } else if (repetitions == 2) {
-                                    interval = 6;
-                                    vocabulary.setInterval(6);
-                                    FirebaseDatabase.getInstance().getReference().child("/users/"+getUid+"/course/"+key+"/Vocabulary/"+key+"learn").child(String.valueOf(listNote.get(demNote))).updateChildren(vocabulary.toMap1());
-                                } else {
-                                    interval = Math.round(interval * easiness);
-                                    vocabulary.setInterval(interval);
-                                    FirebaseDatabase.getInstance().getReference().child("/users/"+getUid+"/course/"+key+"/Vocabulary/"+key+"learn").child(String.valueOf(listNote.get(demNote))).updateChildren(vocabulary.toMap1());
-                                }
-
-                                // next practice
-                                int millisecondsInDay = 60 * 60 * 24 * 1000;
-
-                                long nextPracticeDate = now + millisecondsInDay*interval;
-                                vocabulary.setTemporary_time(nextPracticeDate);
-                                FirebaseDatabase.getInstance().getReference().child("/users/"+getUid+"/course/"+key+"/Vocabulary/"+key+"learn").child(String.valueOf(listNote.get(demNote))).updateChildren(vocabulary.toMap2());
-                                long now = System.currentTimeMillis();
-                                Toast.makeText(Content_course.this, "test đếm note: "+now, Toast.LENGTH_SHORT).show();;
                             }
 
-                            // interval
+                            for (int i = 0;i<a;i++)
+                            {
+                                word.add(g.get(i).getWord());
+                                image.add(g.get(i).getImage());
+                                mean.add(g.get(i).getMeans());
+                            }
+
+                            Vocabulary2 vocabulary = new Vocabulary2();
+                                long repetitions = g.get(demNote).getRepetitions();
+                                float easiness = g.get(demNote).getEf();
+                                long interval = g.get(demNote).getInterval();
+
+                                // easiness factor
+                                easiness = (float) Math.max(1.3, easiness + 0.1 - (5.0 - quality) * (0.08 + (5.0 - quality) * 0.02));
+                                vocabulary.setEf(easiness);
+                                FirebaseDatabase.getInstance().getReference().child("/users/"+getUid+"/course/"+key+"/Vocabulary/"+key+"learn").child(String.valueOf(listNote.get(demNote))).updateChildren(vocabulary.toMap3());
+
+
+                                // repetitions
+                                if (quality < 3) {
+
+                                    complete(word.get(demNote),word.get(demNote),image.get(demNote),mean.get(demNote),"Từ vựng này sẽ xuất hiện lại ngay bây giờ");
+
+                                    word.add(word.get(demNote));
+                                    mean.add(mean.get(demNote));
+                                    image.add(image.get(demNote));
+
+
+
+                                    vocabulary.setRepetitions(0);
+                                    FirebaseDatabase.getInstance().getReference().child("/users/"+getUid+"/course/"+key+"/Vocabulary/"+key+"learn").child(String.valueOf(listNote.get(demNote))).updateChildren(vocabulary.toMap());
+
+
+                                } else {
+                                    vocabulary.setRepetitions(g.get(demNote).getRepetitions()+1);
+                                    FirebaseDatabase.getInstance().getReference().child("/users/"+getUid+"/course/"+key+"/Vocabulary/"+key+"learn").child(String.valueOf(listNote.get(demNote))).updateChildren(vocabulary.toMap());
+
+                                    if (repetitions <= 1) {
+                                        interval = 1;
+                                        vocabulary.setInterval(1);
+                                        FirebaseDatabase.getInstance().getReference().child("/users/"+getUid+"/course/"+key+"/Vocabulary/"+key+"learn").child(String.valueOf(listNote.get(demNote))).updateChildren(vocabulary.toMap1());
+
+                                    } else if (repetitions == 2) {
+                                        interval = 6;
+                                        vocabulary.setInterval(6);
+                                        FirebaseDatabase.getInstance().getReference().child("/users/"+getUid+"/course/"+key+"/Vocabulary/"+key+"learn").child(String.valueOf(listNote.get(demNote))).updateChildren(vocabulary.toMap1());
+                                    } else {
+                                        interval = Math.round(interval * easiness);
+                                        vocabulary.setInterval(interval);
+                                        FirebaseDatabase.getInstance().getReference().child("/users/"+getUid+"/course/"+key+"/Vocabulary/"+key+"learn").child(String.valueOf(listNote.get(demNote))).updateChildren(vocabulary.toMap1());
+                                    }
+
+                                    // next practice
+
+
+                                    int millisecondsInDay = 60 * 60 * 24 * 1000;
+
+                                    long nextPracticeDate = now + millisecondsInDay*interval;
+                                    vocabulary.setTemporary_time(nextPracticeDate);
+                                    FirebaseDatabase.getInstance().getReference().child("/users/"+getUid+"/course/"+key+"/Vocabulary/"+key+"learn").child(String.valueOf(listNote.get(demNote))).updateChildren(vocabulary.toMap2());
+
+
+                                    DateFormat formatter = new SimpleDateFormat("yyyy:MM:dd HH:mm:ss");
+                                    formatter.setTimeZone(TimeZone.getTimeZone("UTC + 7"));
+                                    String dateFormatted = formatter.format(nextPracticeDate);
+
+
+
+                                    int notifi = (int) (millisecondsInDay/1000/60/60*interval);
+                                    if (notifi>=24)
+                                    {
+                                        int t = notifi/24;
+                                        int e = notifi%24;
+
+
+                                    }
+                                    if(listNote.size()>1)
+                                    {
+                                        complete(word.get(1),word.get(0),image.get(1),mean.get(demm),"Lập lại vào ngày\n"+dateFormatted);
+                                    }
+                                    else if (listNote.size()==1)
+                                    {
+                                        complete(word.get(0),word.get(0),image.get(0),mean.get(demm),"Lập lại vào ngày\n"+dateFormatted);
+                                    }
+                                    else {
+                                        Notdata.setVisibility(View.VISIBLE);
+                                    }
+
+
+                                }
+
+                                // interval
 
 
 
 
-                            // Create a calendar object that will convert the date and time value in milliseconds to date.
 
-//                            int notifi = (int) (millisecondsInDay/1000/60/60*interval);
-//                            if (notifi>=24)
-//                            {
-//                                int t = notifi/24;
-//                                int e = notifi%24;
-//                                Toast.makeText(Content_course.this, "Lặp lại sau: "+t+" ngày "+e+" giờ", Toast.LENGTH_SHORT).show();
-//                            }
-//                            repeat.setText(dateFormatted);
+
+
+
+
 
 
                         }
 
-                    }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+                        }
+                    });
 
-                    }
-                });
+
+
 
 
 
@@ -2136,11 +706,243 @@ public class Content_course extends AppCompatActivity {
 
     }
 
+    private void complete(String word,String voice,String imageString,String mean,String time) {
+
+
+        inputText.setText(answer.getText());
+        ///////////////////////////////Khi click vào thay đổi thông tin hình ảnh và từ vựng////////////////////
+        WordContent.setText(word);
+        Glide.with(this).load(imageString).into(image);
+        repeat.setText(time);
+
+        Boolean found1;
+        Boolean found2;
+        Boolean found3;
+        Boolean found4;
+        Boolean found5;
+        Boolean found6;
+        Boolean found7;
+        Boolean found8;
+        Boolean found9;
+        Boolean found10;
+        Boolean found11;
+        Boolean found12;
+
+        eq = answer.getText().toString().trim().toUpperCase(Locale.ROOT);
+
+        found10 = eq.contains(muoi);
+        if (found10 == true)
+        {
+            eq = eq.replace("10","mười");
+
+        }
+        found11 = eq.contains(MuoiMot);
+        if (found11 == true)
+        {
+            eq = eq.replace("11","mười một");
+
+        }
+        found12 = eq.contains(MuoiHai);
+        if (found12 == true)
+        {
+            eq = eq.replace("12","mười hai");
+
+        }
+
+        found1 = eq.contains(mot);
+        if (found1 == true)
+        {
+            eq = eq.replace("1","một");
+
+        }
+
+        found2 = eq.contains(hai);
+        if (found2 == true)
+        {
+            eq = eq.replace("2","hai");
+
+        }
+        found3 = eq.contains(ba);
+        if (found3 == true)
+        {
+            eq = eq.replace("3","ba");
+
+        }
+        found4 = eq.contains(bon);
+        if (found4 == true)
+        {
+            eq = eq.replace("4","tư");
+
+        }
+        found5 = eq.contains(nam);
+        if (found5 == true)
+        {
+            eq = eq.replace("5","năm");
+
+        }
+        found6 = eq.contains(sau);
+        if (found6 == true)
+        {
+            eq = eq.replace("6","sáu");
+
+        }
+        found7 = eq.contains(bay);
+        if (found7 == true)
+        {
+            eq = eq.replace("7","bảy");
+
+        }
+        found8 = eq.contains(tam);
+        if (found8 == true)
+        {
+            eq = eq.replace("8","tám");
+
+        }
+        found9 = eq.contains(chin);
+        if (found9 == true)
+        {
+            eq = eq.replace("9","chín");
+
+        }
+
+        eq = eq.toUpperCase(Locale.ROOT);
+
+
+                temp.setText(mean);
+
+
+
+                String getMean = WordContent.getText().toString();
+                aw = temp.getText().toString().trim().toUpperCase(Locale.ROOT);
+
+                found10 = aw.contains(muoi);
+                if (found10 == true)
+                {
+                    aw = aw.replace("10","mười");
+
+                }
+                found11 = aw.contains(MuoiMot);
+                if (found11 == true)
+                {
+                    aw = aw.replace("11","mười một");
+
+                }
+                found12 = aw.contains(MuoiHai);
+                if (found12 == true)
+                {
+                    aw = aw.replace("12","mười hai");
+
+                }
+
+                found1 = aw.contains(mot);
+                if (found1 == true)
+                {
+                    aw = aw.replace("1","một");
+
+                }
+
+                found2 = aw.contains(hai);
+                if (found2 == true)
+                {
+                    aw = aw.replace("2","hai");
+
+                }
+                found3 = aw.contains(ba);
+                if (found3 == true)
+                {
+                    aw = aw.replace("3","ba");
+
+                }
+                found4 = aw.contains(bon);
+                if (found4 == true)
+                {
+                    aw = aw.replace("4","tư");
+
+                }
+                found5 = aw.contains(nam);
+                if (found5 == true)
+                {
+                    aw = aw.replace("5","năm");
+
+                }
+                found6 = aw.contains(sau);
+                if (found6 == true)
+                {
+                    aw = aw.replace("6","sáu");
+
+                }
+                found7 = aw.contains(bay);
+                if (found7 == true)
+                {
+                    aw = aw.replace("7","bảy");
+
+                }
+                found8 = aw.contains(tam);
+                if (found8 == true)
+                {
+                    aw = aw.replace("8","tám");
+
+                }
+                found9 = aw.contains(chin);
+                if (found9 == true)
+                {
+                    aw = aw.replace("9","chín");
+
+                }
+
+                aw = aw.toUpperCase(Locale.ROOT);
+
+
+                if (eq.equals(aw))
+                {
+                    check.setText("Đáp của bạn đã đúng");
+                    check.setTextColor(getResources().getColor(R.color.dot_dark_screen2));
+                }
+                else {
+                    check.setText("Đáp án bạn chọn đã sai");
+                    check.setTextColor(getResources().getColor(R.color.dot_dark_screen1));
+                }
+
+                ///////////////////////////////chỉnh sửa từ vựng để chuẩn bị đưa vào đường link đọc file âm thanh///////////////////////////////////
+                getMean = getMean.replace(" ","%20");
+
+                String text = "https://translate.google.com/translate_tts?ie=UTF-8&q="+voice+"&tl=en&total=1&idx=0&textlen=12&tk=372388.179982&client=t";
+
+                MediaPlayer mediaPlayer = new MediaPlayer();
+                try {
+                    mediaPlayer.setDataSource(text);
+                    mediaPlayer.prepare();
+                    mediaPlayer.start();
+                } catch (IOException e) {
+                    e.printStackTrace();
+
+                }
+
+                agree.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        try {
+                            ok(font_layout,back_layout);
+
+                            answer.setText("");
+                        }
+                        catch (Exception e)
+                        {
+                            Notdata.setVisibility(View.VISIBLE);
+                            exit = true;
+                        }
+
+                    }
+
+                });
 
 
 
 
 
+
+        //onClickDo_remember_but_long(font_layout,back_layout);
+    }
 
 
     private void readDataWordImage(FirebaseCallbackWord firebaseCallback)
@@ -2150,24 +952,12 @@ public class Content_course extends AppCompatActivity {
         String getUid  = users.getUid();
 
 
-
-
-
-
-
-
-
-
-
-
-
                     final List<Vocabulary2> g = new ArrayList<>();
                     final List<String> word = new ArrayList<>();
                     final List<String> image = new ArrayList<>();
                     final List<Long> note = new ArrayList<>();
 
-      Query query =   FirebaseDatabase.getInstance().getReference().child("/users/"+getUid+"/course/"+key+"/Vocabulary/"+key+"learn").orderByChild("temporary_time").startAt(0);
-      query.endAt(now).addListenerForSingleValueEvent(new ValueEventListener() {
+    FirebaseDatabase.getInstance().getReference().child("/users/"+getUid+"/course/"+key+"/Vocabulary/"+key+"learn").orderByChild("temporary_time").startAt(0).endAt(now).addListenerForSingleValueEvent(new ValueEventListener() {
                         int  i ;
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -2200,6 +990,7 @@ public class Content_course extends AppCompatActivity {
                             }
                             else {
                                 Notdata.setVisibility(View.VISIBLE);
+                                exit = true;
                             }
 
                         }
@@ -2267,6 +1058,7 @@ public class Content_course extends AppCompatActivity {
 
                             else {
                                 Notdata.setVisibility(View.VISIBLE);
+                                exit = true;
                             }
 
                         }
@@ -2294,23 +1086,7 @@ public class Content_course extends AppCompatActivity {
 
     }
 
-    private interface FirebaseCallbackDataEF {
-        void onCallBackEF(List<Float> listEF);
 
-
-    }
-
-    private interface FirebaseCallbackDatatemporary_time{
-        void onCallBackinterval(List<Long> listTemporary_time);
-    }
-
-    private interface FirebaseCallbackDataInterval{
-        void onCallBackinterval(List<Long> listInterval);
-    }
-
-    private interface FirebaseCallbackDataRepetitions{
-        void onCallBackRepetitions(List<Long> listRepetitions);
-    }
 
     private interface FirebaseCallbackMean {
         void onCallBack(List<String> list);
@@ -2732,75 +1508,23 @@ public class Content_course extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        new AlertDialog.Builder(this)
-                .setMessage("Bạn có thực sự muốn thoát không? \nNếu thoát bạn sẽ bị trừ 10 kinh nghiệm")
-                .setCancelable(false)
-                .setPositiveButton("Tôi muốn thoát", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        onClickLow();
 
-                        FirebaseUser users = FirebaseAuth.getInstance().getCurrentUser();
-                        String getUid  = users.getUid();
-
-//////////////get data lever//////////////////////////////////////////
-                        DatabaseReference user = FirebaseDatabase.getInstance().getReference("users");
-                        DatabaseReference uid = user.child(getUid);
-                        uid.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                                long a = snapshot.child("lever").getValue(Long.class);
-                                DatabaseReference lever = FirebaseDatabase.getInstance().getReference("lever");
+                    new AlertDialog.Builder(Content_course.this)
+                            .setMessage("Bạn có thực sự muốn thoát không? ")
+                            .setCancelable(false)
+                            .setPositiveButton("Tôi muốn thoát", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
 
 
-                                lever.addValueEventListener(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot snapshot1) {
-                                        long b = snapshot1.child("lever"+a).getValue(Long.class);
-                                        long exp = snapshot.child("exp").getValue(Long.class);
-                                        progress = (int) exp;
-                                        if (progress <progressBar.getMax() && progress>=10)
-                                        {
-                                            progress -= 10;
-                                            updateProgressBar();
-                                            DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-                                            mDatabase.child("users").child(getUid).child("exp").setValue(exp-10);
-
-                                        }
-                                        if  (progress == progressBar.getMax())
-                                        {
-                                            progress = 0;
-                                            progressBar.setProgress(0);
-                                            textViewProgress.setText("0%");
-                                            DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-                                            mDatabase.child("users").child(getUid).child("lever").setValue(a+1);
-                                            mDatabase.child("users").child(getUid).child("exp").setValue(0);
-                                        }
-
-                                    }
-
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError error) {
-
-                                    }
-                                });
+                                    startActivity(new Intent(Content_course.this, Lottie_BottomBar.class));
 
 
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-
-                        startActivity(new Intent(Content_course.this, Lottie_BottomBar.class));
+                                }
+                            })
+                            .setNegativeButton("Không", null)
+                            .show();
 
 
-                    }
-                })
-                .setNegativeButton("Không", null)
-                .show();
     }
 
     private void updateProgressBar()

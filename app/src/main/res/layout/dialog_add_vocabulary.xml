@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/oval1"
+    android:layout_margin="16sp"
+    android:layout_gravity="center">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/txt1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Điền vào từ vựng "
+                android:gravity="center"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"/>
+
+            <com.lib.customedittext.CustomEditText
+                android:id="@+id/word"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt1"
+
+
+                android:layout_marginStart="@dimen/_8sdp"
+
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:gravity="center"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:maxLength="15"
+                app:edt_background="@drawable/round_editbox"
+                app:edt_hint="Hello"
+                app:edt_padding="@dimen/_10sdp"
+                app:edt_text_color="@android:color/black"
+                app:edt_text_size="@dimen/_12ssp" />
+
+                />
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/word"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="5sp"
+                android:src="@drawable/b" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/add_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/image"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="5sp"
+                android:background="@drawable/oval"
+                android:padding="5sp"
+                android:text="Thêm hình"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <com.lib.customedittext.CustomEditText
+                android:id="@+id/mean"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/add_image"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="5sp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:gravity="center"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:maxLength="15"
+                app:edt_background="@drawable/round_editbox"
+                app:edt_hint="Xin chào"
+                app:edt_padding="@dimen/_10sdp"
+                app:edt_text_color="@android:color/black"
+                app:edt_text_size="@dimen/_12ssp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/add_vocabulary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/mean"
+                android:layout_centerInParent="true"
+                android:background="@drawable/oval2"
+                android:text="Thêm từ vựng"
+                android:textColor="@color/white"
+                android:padding="5sp"
+                android:layout_marginTop="5sp"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:visibility="gone"
+                />
+        </RelativeLayout>
+
+
+
+    </ScrollView>
+
+
+
+</RelativeLayout>
