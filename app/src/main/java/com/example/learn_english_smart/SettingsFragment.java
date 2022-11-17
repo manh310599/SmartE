@@ -76,7 +76,7 @@ public class SettingsFragment extends Fragment {
 
                     name.setText(user1.username);
                         gmail.setText(user1.email);
-                Glide.with(getActivity()).load(user1.image).into(image);
+                Glide.with(container.getContext()).load(user1.image).into(image);
 
 
             }

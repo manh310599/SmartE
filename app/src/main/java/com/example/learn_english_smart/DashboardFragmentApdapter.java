@@ -1,10 +1,12 @@
 package com.example.learn_english_smart;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -43,9 +46,6 @@ public class DashboardFragmentApdapter extends RecyclerView.Adapter<DashboardFra
 
     Context context;
     ArrayList<course> list;
-
-
-
 
 
     public DashboardFragmentApdapter(Context context, ArrayList<course> list) {
@@ -92,7 +92,14 @@ public class DashboardFragmentApdapter extends RecyclerView.Adapter<DashboardFra
             @Override
             public void onClick(View view) {
 //                view.getContext().startActivity(new Intent(view.getContext(),Content_course.class));
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("tải dữ liệu");
+                builder.setMessage("Xin vui lòng đợi");
+                builder.setIcon(R.drawable.smarte);
 
+
+                AlertDialog alert = builder.create();
+                alert.show();
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 assert user != null;
                 String uid = user.getUid();
@@ -113,8 +120,10 @@ public class DashboardFragmentApdapter extends RecyclerView.Adapter<DashboardFra
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot1) {
 
-                                    long a = dataSnapshot1.getChildrenCount();
 
+                                    long a = dataSnapshot1.getChildrenCount();
+                                    FirebaseDatabase.getInstance().getReference().child("/users/" + uid + "/course/3000_vocabulary/"+"image_course").setValue("https://basicenglishspeaking.com/wp-content/uploads/2020/03/oxford-3000-most-common-words-in-English.jpg");
+                                    FirebaseDatabase.getInstance().getReference().child("/users/" + uid + "/course/3000_vocabulary/"+"type").setValue("3000_vocabulary");
                                         for (DataSnapshot dataSnapshot2: dataSnapshot1.getChildren())
                                         {
                                             Vocabulary vocabulary = dataSnapshot2.getValue(Vocabulary.class);
@@ -124,9 +133,13 @@ public class DashboardFragmentApdapter extends RecyclerView.Adapter<DashboardFra
                                             Vocabulary3 vocabulary3 = new Vocabulary3(g.get(i).getWord(),g.get(i).getImage(),g.get(i).getMeans(),1,2.5F,i);
 
                                             FirebaseDatabase.getInstance().getReference("/users/" + uid + "/course/3000_vocabulary/Vocabulary/3000_vocabulary").child(String.valueOf(i)).setValue(vocabulary3);
+                                            if (i==a-1)
+                                            {
+                                                alert.dismiss();
+                                            }
                                         }
-                                    FirebaseDatabase.getInstance().getReference().child("/users/" + uid + "/course/3000_vocabulary/"+"image_course").setValue("https://basicenglishspeaking.com/wp-content/uploads/2020/03/oxford-3000-most-common-words-in-English.jpg");
-                                    FirebaseDatabase.getInstance().getReference().child("/users/" + uid + "/course/3000_vocabulary/"+"type").setValue("3000_vocabulary");
+
+
                                 }
 
                                 @Override
@@ -148,6 +161,7 @@ public class DashboardFragmentApdapter extends RecyclerView.Adapter<DashboardFra
             }
         });
     }
+
 
 
 
