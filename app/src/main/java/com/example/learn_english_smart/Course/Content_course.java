@@ -320,6 +320,13 @@ public class Content_course extends AppCompatActivity {
             }
         });
 
+        add_word.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                add_Vocabulary();
+            }
+        });
+
         hard_to_remember.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -363,7 +370,7 @@ public class Content_course extends AppCompatActivity {
 
 
                 Equal(5);
-                onClickUpEasy(font_layout,back_layout);
+                onClickUpperfect(font_layout,back_layout);
             }
 
 
@@ -1255,7 +1262,7 @@ public class Content_course extends AppCompatActivity {
                             mDatabase.child("users").child(getUid).child("exp").setValue(exp+4);
 
                         }
-                        if  (progress == progressBar.getMax())
+                        if  (progress >= progressBar.getMax())
                         {
                             progress = 0;
                             progressBar.setProgress(0);
@@ -1323,7 +1330,7 @@ public class Content_course extends AppCompatActivity {
                             mDatabase.child("users").child(getUid).child("exp").setValue(exp+5);
 
                         }
-                        if  (progress == progressBar.getMax())
+                        if  (progress >= progressBar.getMax())
                         {
                             progress = 0;
                             progressBar.setProgress(0);
@@ -1391,7 +1398,7 @@ public class Content_course extends AppCompatActivity {
                             mDatabase.child("users").child(getUid).child("exp").setValue(exp+2);
 
                         }
-                        if  (progress == progressBar.getMax())
+                        if  (progress >= progressBar.getMax())
                         {
                             progress = 0;
                             progressBar.setProgress(0);
@@ -1458,7 +1465,7 @@ public class Content_course extends AppCompatActivity {
                             mDatabase.child("users").child(getUid).child("exp").setValue(exp+3);
 
                         }
-                        if  (progress == progressBar.getMax())
+                        if  (progress >= progressBar.getMax())
                         {
                             progress = 0;
                             progressBar.setProgress(0);
@@ -1497,14 +1504,7 @@ public class Content_course extends AppCompatActivity {
     }
 
 
-    public void onClickLow()
-    {
-        if (progress >= 10)
-        {
-            progress -= 10;
-            updateProgressBar();
-        }
-    }
+
 
     @Override
     public void onBackPressed() {
