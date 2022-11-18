@@ -47,7 +47,7 @@ android:gravity="center"
             android:inputType="textEmailAddress"
             android:maxLength="50"
             app:edt_background="@drawable/round_editbox"
-            app:edt_hint="Nhập vào tài khoản"
+            app:edt_hint="Nhập vào gmail"
             app:edt_padding="@dimen/_10sdp"
             app:edt_text_color="@android:color/black"
             app:edt_text_size="@dimen/_12ssp" />
@@ -73,11 +73,12 @@ android:gravity="center"
             android:layout_marginEnd="@dimen/_8sdp"
             android:layout_marginBottom="@dimen/_8sdp"
             android:imeOptions="actionNext"
-            android:inputType="text"
+            android:inputType="textPassword"
             android:maxLength="15"
             app:edt_background="@drawable/round_editbox"
-            app:edt_hint="Nhập vào tài khoản"
+            app:edt_hint="Nhập vào mật khẩu"
             app:edt_padding="@dimen/_10sdp"
+
             app:edt_text_color="@android:color/black"
             app:edt_text_size="@dimen/_12ssp" />
 

@@ -181,7 +181,7 @@
                         android:layout_height="40sp"
                         android:layout_weight="4"
                         android:background="@drawable/oval"
-
+                        android:textColor="@color/white"
                         android:text="Hoàn toàn không" />
 
                     <androidx.appcompat.widget.AppCompatButton
@@ -221,6 +221,7 @@
                     android:background="@drawable/oval"
                     android:text="có nhớ nhưng lâu"
                     android:id="@+id/do_remember_but_long"
+                    android:textColor="@color/white"
                     />
                 <androidx.appcompat.widget.AppCompatButton
                     android:layout_width="0dp"

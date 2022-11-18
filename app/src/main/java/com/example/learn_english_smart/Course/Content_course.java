@@ -458,7 +458,7 @@ public class Content_course extends AppCompatActivity {
         Add_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (word.getText().equals(""))
+                if (word.getText().equals("") || mean.getText().equals(""))
                 {
                     Toast.makeText(Content_course.this, "Không được trống hãy điền vào từ vựng", Toast.LENGTH_SHORT).show();
                 }
