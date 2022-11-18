@@ -50,7 +50,7 @@ public class Lottie_BottomBar extends AppCompatActivity implements ILottieBottom
                 .build();
 
         //Example Spannable String (at Menu Gifts)
-        SpannableString spannableString = new SpannableString("Tự do");
+        SpannableString spannableString = new SpannableString("Tra cứu");
         spannableString.setSpan(new ForegroundColorSpan(Color.RED), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         //Menu Gifts

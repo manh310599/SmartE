@@ -1,16 +1,23 @@
 package com.example.learn_english_smart;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -66,6 +73,7 @@ public class MailFragmentAdapter extends RecyclerView.Adapter<MailFragmentAdapte
         return new MyviewHoler(v);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.R)
     @Override
     public void onBindViewHolder(@NonNull MyviewHoler holder, int position) {
         course course1 = list.get(position);
@@ -283,6 +291,41 @@ public class MailFragmentAdapter extends RecyclerView.Adapter<MailFragmentAdapte
 
             }
         });
+
+       holder.course.setOnLongClickListener(new View.OnLongClickListener() {
+           @Override
+           public boolean onLongClick(View view) {
+
+               Dialog alertDialog = new Dialog(context);
+               alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+               alertDialog.setContentView(R.layout.warning);
+               alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+               Button agree1 = alertDialog.findViewById(R.id.agree1);
+               Button No = alertDialog.findViewById(R.id.no);
+
+               No.setOnClickListener(new View.OnClickListener() {
+                   @Override
+                   public void onClick(View view) {
+                       alertDialog.dismiss();
+                   }
+               });
+
+               agree1.setOnClickListener(new View.OnClickListener() {
+                   @Override
+                   public void onClick(View view) {
+
+                       FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                       String uid = user.getUid();
+
+                       FirebaseDatabase.getInstance().getReference().child("/users/"+uid+"/course/"+course1.getType()).removeValue();
+                       alertDialog.dismiss();
+                   }
+               });
+                alertDialog.show();
+               return false;
+           }
+       });
     }
 
 
