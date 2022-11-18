@@ -324,6 +324,7 @@ public class MailFragmentAdapter extends RecyclerView.Adapter<MailFragmentAdapte
                });
                 alertDialog.show();
                return false;
+
            }
        });
     }
